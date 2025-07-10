@@ -1,0 +1,1 @@
+{"version":3,"sources":["main.scss"],"names":[],"mappings":"AAAA,UACI,iBAAA,IACA,MAAA,KACA,UAAA","file":"main.css","sourcesContent":[".response{\n    background-color: red;\n    color: #fff;\n    font-size: 24px;\n}"]}
