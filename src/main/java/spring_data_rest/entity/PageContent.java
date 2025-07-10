@@ -14,7 +14,6 @@ public class PageContent {
     @Column(length = 10000)
     private String content;
 
-    // Constructors
     public PageContent() {
     }
 
@@ -23,7 +22,6 @@ public class PageContent {
         this.content = content;
     }
 
-    // Getters and setters
     public int getId() {
         return id;
     }

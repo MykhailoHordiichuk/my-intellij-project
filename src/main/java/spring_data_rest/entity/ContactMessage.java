@@ -26,8 +26,6 @@ public class ContactMessage {
         sentAt = LocalDateTime.now();
     }
 
-    // Геттеры и сеттеры
-
     public int getId() {
         return id;
     }
