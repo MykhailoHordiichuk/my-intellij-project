@@ -5,7 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration // Класс конфигурации Spring Security
 public class SecurityConfig {
@@ -13,18 +17,15 @@ public class SecurityConfig {
     @Bean // Бин, настраивающий цепочку безопасности
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors(Customizer.withDefaults()) // <--- Включаем CORS
                 // Настройка правил авторизации запросов
                 .authorizeHttpRequests(auth -> auth
                         // Swagger UI и OpenAPI эндпоинты разрешаем без аутентификации
-                        .requestMatchers(
-                                new AntPathRequestMatcher("/swagger-ui/**"),
-                                new AntPathRequestMatcher("/v3/api-docs/**"),
-                                new AntPathRequestMatcher("/swagger-ui.html")
-                        ).permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                         // Эндпоинты Actuator также разрешаем без аутентификации (если нужно)
-                        .requestMatchers(new AntPathRequestMatcher("/actuator/**")).permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
                         // Все запросы на /api/** требуют аутентификации
-                        .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated()
+                        .requestMatchers("/api/**").authenticated()
                         // Остальные запросы разрешены всем
                         .anyRequest().permitAll()
                 )
@@ -35,5 +36,18 @@ public class SecurityConfig {
 
         // Возвращаем настроенную цепочку фильтров
         return http.build();
+    }
+
+    @Bean // Бин CORS-настроек: откуда можно слать запросы, с какими методами и заголовками
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of("http://127.0.0.1:5500")); // Фронт локально
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Разрешённые методы
+        config.setAllowedHeaders(List.of("Authorization", "Content-Type")); // Разрешённые заголовки
+        config.setAllowCredentials(true); // если нужен cookie / авторизация
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config); // применить ко всем путям
+        return source;
     }
 }
