@@ -3,6 +3,8 @@ package spring_data_rest.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.Customizer;
 import org.springframework.web.cors.CorsConfiguration;
@@ -24,13 +26,14 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                         // Эндпоинты Actuator также разрешаем без аутентификации (если нужно)
                         .requestMatchers("/actuator/**").permitAll()
-                        // Все запросы на /api/** требуют аутентификации
+                        // Разрешаем регистрацию и логин без авторизации
+                        .requestMatchers("/api/auth/**").permitAll()
+                        // Все остальные /api/** требуют аутентификации
                         .requestMatchers("/api/**").authenticated()
                         // Остальные запросы разрешены всем
                         .anyRequest().permitAll()
                 )
-                // Включаем HTTP Basic аутентификацию (логин/пароль через браузер)
-                .httpBasic(Customizer.withDefaults())
+
                 // Отключаем CSRF (обычно для REST API сессии не нужны)
                 .csrf(csrf -> csrf.disable());
 
@@ -49,5 +52,9 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config); // применить ко всем путям
         return source;
+    }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
