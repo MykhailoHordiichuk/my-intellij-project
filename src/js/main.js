@@ -30,3 +30,7 @@
         document.getElementById('response').textContent = 'Error adding student: ' + err.message;
       });
   });
+
+
+
+  new Glide('.glide').mount()
