@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.5</version>
+        <version>3.2.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.zaurtregulov.spring.springboot</groupId>
@@ -61,7 +61,7 @@
 
         <!-- Swagger UI (springdoc-openapi)
      Подключает автогенерацию документации REST API
-     Доступно по адресу: http://localhost:8080/swagger-ui/index.html -->
+     Доступно по адресу: http://localhost:8080/swagger-ui/index.html#/ -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
