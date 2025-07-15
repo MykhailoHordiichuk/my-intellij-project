@@ -247,22 +247,48 @@
 
     .hero-right-img{
         position: relative;
+        max-width: 550px;
+        margin: 0 auto;
+        overflow: visible; // можно оставить, если псевдоэлемент не будет вылазить
+        z-index: 1;
         
 
-        &::before{
-            content: url('../img/one.png');
+        &::before {
+            content: "";
             position: absolute;
+            top: -58px; // подстрой под себя
+            left: -40px; // сдвиг влево
+            width: 110%; // чуть больше основного блока
+            height: 110%; // можно подогнать вручную
+            background-image: url('../img/one.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
             z-index: -1;
-            top: -67px;
-            left: 0;
+            pointer-events: none;
         }
         &::after{
-            content: url('../img/two.png');
+            content: "";
             position: absolute;
+            top: -58px; // подстрой под себя
+            left: -40px; // сдвиг влево
+            width: 110%; // чуть больше основного блока
+            height: 110%; // можно подогнать вручную
+            background-image: url('../img/two.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
             z-index: -1;
-            top: -67px;
-            left: 0;
+            pointer-events: none;
         }
+
+        img {
+            width: 100%;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+  
 
 
         @media (max-width:450px){
@@ -376,11 +402,129 @@
     padding-top: 5rem;
     padding-bottom: 5rem;
 
+ 
+
+    .study-blue-text{
+        font-size: 2rem;
+        font-weight: 800;
+        font-family: $def-fronts;
+        color: $blue;   
+    }
+
+    .study-second-heading{
+      font-size: 4rem;
+      color: $green;
+      font-family: $def-fronts;
+      font-weight: 800;      
+    }
+
+     .card-study-row{
+        margin-top: 150px;
+
+    }
+
+    .card-study-row > .col-4:nth-child(2) .study-card-header-img {
+            top: -117px;
+            max-width: 310px;
+            left: 34px;
+            right: 0;
+    }
+
+        .card-study-row > .col-4:nth-child(3) .study-card-header-img {
+            top: -96px;
+            max-width: 310px;
+            left: 49px;
+            right: 0;
+    }
 
 
-    .swiper{
+
+    .study-card{
+
+        max-width: 360px;
+        box-shadow: 3.62px 3.62px 7.24px 0px #3C62DD3D;
+        border-radius: 29px;
+        text-align: center;
+        padding-bottom: 33px;
+
+        margin-left: auto;
+        margin-right: auto;
+     
+       
+        .study-card-header{
+            padding-left: 85px;
+            padding-right: 85px;
+            background-color: $green;
+            width: 100%;
+            height: 315px;
+            border-bottom-left-radius: 230px;
+            border-bottom-right-radius: 230px;
+            border-top-left-radius: 29px;
+            border-top-right-radius: 29px;
+            position: relative;
+        }
+
+        .card--gradient{
+           background: linear-gradient(89.12deg, #3DC85E 0.86%, #3C62DD 99.38%);
+        }
+        .card--blue{
+            background-color: $blue;
+        }
+     
+        .study-card-header-img{
+            position: absolute;
+            top: -120px;
+            max-width: 310px;
+            left: 36px;
+            right: 0;
+        }
+
+
+
+        .study-card-body{
+
+            margin-top: 16px;
+
+            .study-card-heading{
+                font-family: $def-fronts;
+                color: $black;
+                font-size: 1.5rem;
+                font-weight: 700;   
+            }
+
+            .study-card-body{
+                font-family: $def-fronts;
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: $black;
+                max-width: 191px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+        }
+    }
+
+  
+
+    .study-card-btn{
+        background-color: $green;
+        padding: 18px;
+        border: 4px solid transparent;
+        border-radius: 32px;
+        font-family: $def-fronts;
+        color: $white;
+        font-size: 1.1rem;
+        font-weight: 700;
+        line-height: 100%;
+        transition: all .33s ease;
+        box-shadow: 4px 4px 8px 0px #3DC85E3D;
+        text-transform:uppercase;
+            &:hover{
+            border: 4px solid $green;
+            background-color: transparent;
+            color: $black;
+        }
+    }
     
-        
-    }   
-
 }
