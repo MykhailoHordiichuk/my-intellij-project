@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
         info = @Info(
                 title = "Online Language Courses API",
                 version = "1.0",
-                description = "Документация API для сайта языковых курсов"
+                description = "API Documentation for Language Courses Website"
         )
 )
 @SpringBootApplication
