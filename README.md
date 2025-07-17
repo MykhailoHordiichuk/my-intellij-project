@@ -1,6 +1,8 @@
 # 🌍 Online Language School – Spring Boot REST API
 
-This is a Spring Boot REST API application for managing an online language school. It supports operations for managing students, courses, teachers (employees), static content pages, and contact messages.
+This is a Spring Boot REST API application for managing an online language school. It supports operations for managing students, courses, teachers (employees), static content pages, contact messages, and user authentication.
+
+🌐 Frontend: https://easy-german.netlify.app/
 
 ---
 
@@ -12,15 +14,25 @@ This is a Spring Boot REST API application for managing an online language schoo
     - Employees (Teachers)
     - Contact messages
     - Static page content
+- User registration and login with encrypted passwords
 - Relationship management:
     - Many-to-Many between Students and Courses
     - One-to-Many between Employee and Courses
-- In-memory H2 database (no external DB required)
+- In-memory H2 database (or external MySQL)
 - JSON serialization with cycle handling (`@JsonManagedReference`, `@JsonBackReference`)
+- Basic HTTP authentication (Spring Security)
+- Swagger UI available
 
 ---
 
-## 🧱 Entities Overview
+## 👥 Authentication & Users
+- `POST /api/auth/register` – Register a new user
+- `POST /api/auth/login` – Login with email and password
+  
+User entity fields:
+- `id`, `username`, `email`, `password (encrypted)`, `fullName`, `role`, `enabled`
+
+## 🗂️ Entities Overview
 
 ### 🧑‍🎓 Student
 - `id`, `firstName`, `lastName`, `email`
@@ -40,6 +52,8 @@ This is a Spring Boot REST API application for managing an online language schoo
 
 ### 🧾 PageContent
 - `id`, `title`, `content`
+### 👤 User
+- `id`, `username`, `email`, `password (encrypted)`, `fullName`, `role`, `enabled`
 
 ---
 
@@ -64,8 +78,18 @@ This is a Spring Boot REST API application for managing an online language schoo
 ---
 
 ## 🔗 REST API Endpoints
+### 🌐 Home
+| Method | Endpoint                      | Description                   |
+|--------|-------------------------------|-------------------------------|
+| GET    | `/`                           | Welcome message with link to Swagger              |
 
-### Students
+### 👥 Auth
+| Method | Endpoint                       | Description                   |
+|--------|--------------------------------|-------------------------------|
+| POST   | `/api/auth/register`           | Register a new user            |
+| POST    | `/api/auth/login`              | Login with email/password       |
+
+### 🧑‍🎓 Students
 | Method | Endpoint                        | Description                   |
 |--------|----------------------------------|-------------------------------|
 | GET    | `/api/students`                 | Get all students              |
@@ -75,7 +99,7 @@ This is a Spring Boot REST API application for managing an online language schoo
 | DELETE | `/api/students/{id}`            | Delete student                |
 | POST   | `/api/students/{id}/courses/{courseId}` | Enroll student in course |
 
-### Courses
+### 📘 Courses
 | Method | Endpoint              | Description              |
 |--------|------------------------|--------------------------|
 | GET    | `/api/courses`        | Get all courses          |
@@ -84,7 +108,7 @@ This is a Spring Boot REST API application for managing an online language schoo
 | PUT    | `/api/courses/{id}`   | Update course            |
 | DELETE | `/api/courses/{id}`   | Delete course            |
 
-### Employees (Teachers)
+### 👩‍🏫 Employees (Teachers)
 | Method | Endpoint                   | Description                   |
 |--------|-----------------------------|-------------------------------|
 | GET    | `/api/employees`          | Get all employees             |
@@ -93,7 +117,7 @@ This is a Spring Boot REST API application for managing an online language schoo
 | PUT    | `/api/employees/{id}`     | Update existing employee      |
 | DELETE | `/api/employees/{id}`     | Delete employee               |
 
-### Contact Messages
+### 💬 Contact Messages
 | Method | Endpoint               | Description                  |
 |--------|--------------------------|------------------------------|
 | GET    | `/api/contact`         | Get all contact messages     |
@@ -101,7 +125,7 @@ This is a Spring Boot REST API application for managing an online language schoo
 | POST   | `/api/contact`         | Submit a new message         |
 | DELETE | `/api/contact/{id}`    | Delete a message             |
 
-### Static Pages
+### 📟 Static Pages
 | Method | Endpoint             | Description                |
 |--------|------------------------|----------------------------|
 | GET    | `/api/pages`         | Get all static pages       |
@@ -121,13 +145,30 @@ This is a Spring Boot REST API application for managing an online language schoo
   "email": "alice@example.com"
 }
 ```
+### Register User
+```json
+{
+  "username": "michael",
+  "email": "michael@example.com",
+  "password": "qwerty123",
+  "fullName": "Michael Mustermann"
+}
+```
+### Login User
+```json
+{
+  "email": "michael@example.com",
+  "password": "qwerty123"
+}
+```
+
 
 ### Create Course
 ```json
 {
-  "language": "French",
+  "language": "German",
   "level": "Beginner",
-  "description": "Intro to French",
+  "description": "Intro to German",
   "price": 120,
   "durationWeeks": 4,
   "teacher": {
@@ -152,7 +193,7 @@ This is a Spring Boot REST API application for managing an online language schoo
 {
   "name": "Visitor",
   "email": "visitor@example.com",
-  "message": "I have a question about the French course."
+  "message": "I have a question about the German course."
 }
 ```
 
@@ -160,16 +201,21 @@ This is a Spring Boot REST API application for managing an online language schoo
 
 ## ⚙️ Configuration
 
-The app connects to a remote MySQL database at 192.168.0.17:3306/my_db with user remoteadmin and password springcourse. Hibernate auto-updates the schema. Basic auth is enabled with user michael and password qwerty. Settings are in application.properties under the "macmini" profile.
-
+- Remote MySQL DB: `192.168.0.17:3306/my_db`
+- User: `remoteadmin`, Password: `springcourse`
+- Hibernate auto-DDL enabled
+- Basic Auth: `michael:qwerty` (in `application.properties`)
+- Swagger UI: http://localhost:8080/swagger-ui/index.html#/
+- Active profile: macmini
 ---
 
 ## 📁 Project Structure (src/main/java)
 ```
-com.zaurtregulov.spring.springboot.spring_data_rest
+spring_data_rest
 ├── config/
 ├── controller/
 ├── dao/
+├── dto/
 ├── entity/
 └── SpringDataRestApplication.java
 ```
@@ -178,10 +224,19 @@ com.zaurtregulov.spring.springboot.spring_data_rest
 
 ## 🔒 Security
 
-All requests to /api/** are protected by basic HTTP authentication with username michael and password qwerty (from application.properties). Swagger UI and Actuator are publicly accessible. CSRF is disabled.
+- All `/api/**` endpoints are protected with Basic Auth
+- Swagger & Actuator are publicly available
+- CSRF protection disabled
 
 ---
 
+## 🧑‍💼 Collaborating
+
+- Currently working on:
+    - Improved validation and error handling
+    - Full frontend integration via https://easy-german.netlify.app/
+    - New API endpoints and functionality
+---
 ## 📃 License
 
 Free to use for learning and educational purposes.
