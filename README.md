@@ -2,7 +2,7 @@
 
 This is a Spring Boot REST API application for managing an online language school. It supports operations for managing students, courses, teachers (employees), static content pages, contact messages, and user authentication.
 
-🌐 Frontend:  https://easyeng.netlify.app/
+🌐 Frontend (in development): https://easyeng.netlify.app/
 
 ---
 
