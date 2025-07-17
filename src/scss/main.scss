@@ -528,3 +528,25 @@
     }
     
 }
+
+
+.result{
+    padding-top: 80px;
+    padding-bottom: 80px;
+
+
+    .result-blue-text{
+        font-size: 2rem;
+        font-weight: 800;
+        font-family: $def-fronts;
+        color: $blue;   
+    }
+
+    .result-second-heading{
+      font-size: 4rem;
+      color: $green;
+      font-family: $def-fronts;
+      font-weight: 800;  
+      text-transform: capitalize;    
+    }
+}
