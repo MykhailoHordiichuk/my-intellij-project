@@ -60,7 +60,10 @@ public class SecurityConfig {
     @Bean // Бин CORS-настроек: откуда можно слать запросы, с какими методами и заголовками
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://127.0.0.1:5500")); // Фронт локально
+        config.setAllowedOrigins(List.of(
+            "http://127.0.0.1:5500",
+            "https://easyeng.netlify.app"
+        )); 
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Разрешённые методы
         config.setAllowedHeaders(List.of("Authorization", "Content-Type")); // Разрешённые заголовки
         config.setAllowCredentials(true); // если нужен cookie / авторизация
