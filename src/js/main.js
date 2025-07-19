@@ -33,4 +33,4 @@
 
 
 
-  new Glide('.glide').mount()
+

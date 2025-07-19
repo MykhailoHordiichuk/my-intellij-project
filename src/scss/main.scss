@@ -9,8 +9,10 @@
 
 .container{
     max-width: 1440px;
-    margin: auto;
-    padding: 0px 16px;
+    // margin: auto;
+
+    padding-left: 4rem;
+    padding-right: 4rem;
 
 }
 
@@ -312,10 +314,7 @@
 
 .easy{
     text-align: center;
-    padding-top: 80px;
-    padding-bottom: 80px;
-    padding-right: 186px;
-    padding-left: 186px;
+
 
     @media (max-width:1024px) {
         padding-left: 0px;
@@ -548,5 +547,256 @@
       font-family: $def-fronts;
       font-weight: 800;  
       text-transform: capitalize;    
+    }
+
+    .row-card-first{
+        margin-top: 60px;
+    }
+
+    .row-card-second{
+        margin-top: 80px;
+    }
+
+    .result-card{
+        text-align: center;
+        position: relative;
+        &-first-icon{
+            margin-left: auto;
+            margin-right: auto;
+            font-family: Raleway, sans-serif;
+            color: #fdfdff;
+            background-color: #3c62dd;
+            padding: 22px;
+            box-shadow: 4px 4px 8px 0 rgba(60, 98, 221, .2392156863);
+            border-radius: 100px;
+            max-width: 80px;
+            font-size: 2rem;
+            font-weight: 900;
+            line-height: 100%;
+        }
+
+        &-first-text{
+            font-family: $def-fronts;
+            color: $black;
+            font-size: 1.1rem;
+            font-weight: 600;
+            max-width: 120px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 16px;
+        }
+    }
+
+
+    .result-card-second::after{
+        content: url(../img/line1.png);
+        position: absolute;
+        top: 22px;
+        left: -192px;
+    }
+
+    .result-card-second::before{
+        content: url(../img/line2.png);
+        position: absolute;
+        top: 40px;
+        right: -200px;
+    }
+
+    @media  (min-width: 320px) and (max-width:768px){
+        .result-card-second::after{
+           display: none;
+        }
+
+        .result-card-second::before{
+           display: none;
+        }
+    }
+}
+
+
+
+.feedback{
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+
+    .splide__slide{
+        height: 400px;
+    }
+
+    .feedback-blue-text{
+        font-size: 2rem;
+        font-weight: 800;
+        font-family: $def-fronts;
+        color: $blue;   
+        text-transform: capitalize;
+    }
+
+    .feedback-second-heading{
+      font-size: 4rem;
+      color: $green;
+      font-family: $def-fronts;
+      font-weight: 800;  
+      text-transform: capitalize;    
+    }
+
+
+    .feedback-card {
+        display: flex;
+        gap: 32px;
+        max-width: 664px;
+        box-shadow: 4px 4px 8px 0px #3C62DD3D;
+        border-radius: 33px;
+        padding: 40px;
+
+
+        &-img img {
+            max-width: 200px;
+        }
+
+        &-text {
+
+            &-heading{
+                color: $blue;
+                font-family: $def-fronts;
+                font-size: 1rem;
+                font-weight: 800;
+                text-transform: capitalize;
+            }
+
+            &-stars {
+                list-style: none;
+                display: flex;
+                gap: 15px;
+                padding: 0;
+                margin-top: 8px;
+                margin-bottom: 18px;
+
+                &-items {
+                    color: #F2C94C; // початковий колір зірки
+                    transition: all 0.33s ease ;
+                
+                    &:hover {
+                        color: $blue;
+                        cursor: pointer; 
+                        rotate: (90deg);
+                    }
+                }
+            }
+
+            p{
+                font-family: $def-fronts;
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: $black;
+            }
+        }
+    }
+
+}
+
+
+
+.online{
+   padding-top: 5.5rem;
+   padding-bottom: 5.5rem;
+
+
+   .online-row{
+        justify-items: center;
+        justify-content: center;
+        align-items: center;
+   }
+
+   .online-text-left{
+        h5{
+            color: $blue;
+            font-family: $def-fronts;
+            font-weight: 800;
+            font-size: 2rem;
+            text-transform: capitalize;
+        }
+
+        h2{
+            color: $green;
+            font-size: 4rem;
+            font-weight: 800;
+            font-family: $def-fronts;
+            text-transform: capitalize;
+        }
+
+        p{
+            color: $black;
+            font-family: $def-fronts;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .app-btn{
+            display: flex;
+            margin-top: 40px;
+            gap: 24px;
+        }
+   }
+
+
+
+   .online-text-right{
+  
+        text-align: center;
+        img{
+            max-width: 550px;        
+        }
+   }
+}
+
+
+
+.contactus{
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    text-align: center;
+
+
+    .create-student-form{
+        width: 820px;
+        margin-left: auto;
+        margin-right: auto;
+  
+        h2{
+            font-size: 2rem;
+            font-family: $def-fronts;
+            color: $blue;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+        p{
+            font-size: 2rem;
+            font-weight: 800;
+            font-family: $def-fronts;
+            color: $blue;
+         
+        }
+
+        .online-form{
+            margin-top: 2.5rem;
+        }
+
+
+        .online-form-input{
+            padding:  1rem 2rem;
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 4px 4px 8px 0px #3C62DD3D;
+            border: 1px solid $white;
+            font-weight: 700;
+            font-family: $def-fronts;
+
+
+            &:active, &:focus{
+                outline: none;
+                border: 1px solid $green;
+            }
+        }
+
     }
 }

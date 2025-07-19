@@ -19,5 +19,8 @@
     "gulp-sourcemaps": "^3.0.0",
     "now-and-later": "^3.0.0",
     "sass": "^1.89.2"
+  },
+  "dependencies": {
+    "@splidejs/splide": "^4.1.4"
   }
 }
