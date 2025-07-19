@@ -10,7 +10,9 @@ import org.springframework.security.config.Customizer;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.cors.CorsConfigurationSource;
-
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import java.util.List;
 
 @Configuration // Класс конфигурации Spring Security
@@ -19,6 +21,7 @@ public class SecurityConfig {
     @Bean // Бин, настраивающий цепочку безопасности
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .httpBasic(Customizer.withDefaults()) // 💥 ОБЯЗАТЕЛЬНО ДЛЯ BASIC AUTH
                 .cors(Customizer.withDefaults()) // <--- Включаем CORS
                 // Настройка правил авторизации запросов
                 .authorizeHttpRequests(auth -> auth
@@ -30,6 +33,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         // Все остальные /api/** требуют аутентификации
                         .requestMatchers("/api/**").authenticated()
+                        // .requestMatchers("/api/**").permitAll()
                         // Остальные запросы разрешены всем
                         .anyRequest().permitAll()
                 )
@@ -39,6 +43,18 @@ public class SecurityConfig {
 
         // Возвращаем настроенную цепочку фильтров
         return http.build();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
+        return new InMemoryUserDetailsManager(
+                User.builder()
+                        .username("michael")
+                        .password(encoder.encode("qwerty"))
+                        .roles("ADMIN")
+                        .build()
+
+        );
     }
 
     @Bean // Бин CORS-настроек: откуда можно слать запросы, с какими методами и заголовками
