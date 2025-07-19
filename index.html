@@ -483,28 +483,32 @@
             <form id="studentForm" class="online-form">
              <div class="row g-3">
               <div class="col">
-                  <input type="text" class="online-form-input" name="fullname" placeholder="First name" aria-label="Full Name">
+                  <input required type="text" class="online-form-input" name="fullname" placeholder="First name" aria-label="Full Name">
                 </div>
               <div class="col">
-                  <input type="email" class="online-form-input" name="email" placeholder="First name" aria-label="Full Name">
+                  <input required type="email" class="online-form-input" name="email" placeholder="First name" aria-label="Full Name">
               </div>
              </div>
             
              <div class="row">
               <div class="col">
-                <textarea name="message" class="online-form-textarea" placeholder="Message..." rows="3" id=""></textarea>
+                <textarea required name="message" class="online-form-textarea" placeholder="Message..." rows="3" id=""></textarea>
               </div>
              </div>
             
 
               <button type="submit" class="btn online-send-form">send now</button>
+
+               
             </form>
+
+            <p id="response" class="response-msg"></p>
         </div>
       </div>
     </div>
   </div>
 </section>
-  <p id="response"></p>
+ 
 
 
 

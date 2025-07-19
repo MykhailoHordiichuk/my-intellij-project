@@ -1,6 +1,6 @@
-  
-// CONTACT FORM
   const form = document.getElementById('studentForm');
+  const responseEl = document.getElementById('response');
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -15,7 +15,7 @@
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + btoa('michael:qwerty') // ← если нужно
+        'Authorization': 'Basic ' + btoa('michael:qwerty')
       },
       body: JSON.stringify(data)
     })
@@ -24,12 +24,23 @@
       return res.json();
     })
     .then(result => {
-      document.getElementById('response').textContent = 'Message sent successfully!';
+      responseEl.textContent = 'Message sent successfully!';
+      responseEl.className = 'response-msg success';
       form.reset();
+
+      setTimeout(() => {
+        responseEl.textContent = '';
+        responseEl.className = 'response-msg';
+      }, 5000);
     })
     .catch(err => {
       console.error(err);
-      document.getElementById('response').textContent = 'Error sending message: ' + err.message;
+      responseEl.textContent = 'Error sending message: ' + err.message;
+      responseEl.className = 'response-message error';
+
+      setTimeout(() => {
+        responseEl.textContent = '';
+        responseEl.className = 'response-msg';
+      }, 5000);
     });
   });
-  // CONTACT FORM

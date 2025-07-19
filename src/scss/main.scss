@@ -839,5 +839,21 @@
             }
         }
 
+
+        .response-msg{
+            margin-top: 40px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: $black;
+        }
+
+           .success{
+                color: $green;
+            }
+            .error{
+                color: red;
+            }
+
     }
+
 }
