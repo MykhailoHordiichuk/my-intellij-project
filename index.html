@@ -52,39 +52,79 @@
 
 <!-- Modal signUp -->
   <div class="modal fade" id="signUp" tabindex="-1" aria-labelledby="signUp" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog ">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="signUp">Modal title</h1>
+          <h1 class="modal-title fs-5" id="signUp">Sign In</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          ...
+            <form action="" id="login">
+                <div class="row">
+                  <div class="col">
+                    <input type="text" class="form-control" name="name" placeholder="First name" aria-label="Email" required>
+                  </div>
+                  <div class="col">
+                    <input type="password" class="form-control" name="email" placeholder="Password" aria-label="Password" required>
+                  </div>
+              </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary reg-btn">Sign In</button>
+                </div>
+            </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+      
       </div>
     </div>
   </div>
 <!-- Modal -->
 
 <!-- Modal register -->
-  <div class="modal fade" id="register" tabindex="-1" aria-labelledby="register" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal fade " id="register" tabindex="-1" aria-labelledby="register" aria-hidden="true">
+    <div class="modal-dialog ">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="register">Register</h1>
+          <h1 class="modal-title " id="register">Register</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+         <form class="row g-3" id="register">
+            <div class="col-12">
+              <label for="UserName" class="form-label">UserName (Login)</label>
+              <input type="text" class="form-control" id="UserName" name="username" placeholder="UserName" required>
+            </div>
+            <div class="col-md-6">
+              <label for="Email" class="form-label">Email</label>
+              <input type="email" class="form-control" name="email" id="Email" required>
+            </div>
+            <div class="col-md-6">
+              <label for="Password" class="form-label">Password</label>
+              <input type="password" class="form-control" name="password" id="Password" required>
+            </div>          
+            <div class="col-12">
+              <label for="FullName" class="form-label">FullName</label>
+              <input type="text" class="form-control" id="FullName" name="fullname"  placeholder="FullName" required>
+            </div>
+            
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input" name="student" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">
+                  Student
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" name="teacher" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">
+                 Teacher
+                </label>
+              </div>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary reg-btn">Register</button>
+            </div>
+          </form>
+        </div>      
       </div>
     </div>
   </div>
