@@ -62,7 +62,7 @@
             <form action="" id="login">
                 <div class="row">
                   <div class="col">
-                    <input type="text" class="form-control" name="name" placeholder="First name" aria-label="Email" required>
+                    <input type="email" class="form-control" name="email" placeholder="Email" aria-label="Email" required>
                   </div>
                   <div class="col">
                     <input type="password" class="form-control" name="email" placeholder="Password" aria-label="Password" required>
@@ -73,7 +73,7 @@
                 </div>
             </form>
         </div>
-      
+        <div class="result_signIn" id="result_signIn"></div>
       </div>
     </div>
   </div>
@@ -88,7 +88,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-         <form class="row g-3" id="register">
+         <form class="row g-3" id="create_account_form">
             <div class="col-12">
               <label for="UserName" class="form-label">UserName (Login)</label>
               <input type="text" class="form-control" id="UserName" name="username" placeholder="UserName" required>
@@ -112,7 +112,7 @@
                 <label class="form-check-label" for="gridCheck">
                   Student
                 </label>
-              </div>
+              </div>  
               <div class="form-check">
                 <input class="form-check-input" name="teacher" type="checkbox" id="gridCheck">
                 <label class="form-check-label" for="gridCheck">
@@ -121,10 +121,11 @@
               </div>
             </div>
             <div class="col-12">
-              <button type="submit" class="btn btn-primary reg-btn">Register</button>
+              <button type="submit" class="btn btn-primary reg-btn">Create</button>
             </div>
           </form>
-        </div>      
+        </div>   
+        <div class="result_create_account" id="result_create_account"></div>   
       </div>
     </div>
   </div>
