@@ -59,6 +59,12 @@
             <scope>runtime</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <!-- Swagger UI (springdoc-openapi)
      Подключает автогенерацию документации REST API
      Доступно по адресу: http://localhost:8080/swagger-ui/index.html#/ -->
