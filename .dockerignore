@@ -1,5 +1,15 @@
-.git
-.gitignore
-*.iml
+# Maven/Gradle
+target/
+build/
+.gradle/
+
+# IDEs
 .idea/
-mysql-init/init.sql
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# System files
+.DS_Store
+*.log
