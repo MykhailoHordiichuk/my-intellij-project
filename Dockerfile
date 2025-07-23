@@ -9,5 +9,5 @@ COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
 
-# 🔥 ВАЖНО: говорим JVM использовать Railway порт
-ENTRYPOINT ["java", "-Dspring.profiles.active=railway", "-Dserver.port=${PORT}", "-jar", "app.jar"]
+# ✅ Исправлено: подставляем переменную окружения PORT корректно
+ENTRYPOINT sh -c "java -Dspring.profiles.active=railway -Dserver.port=$PORT -jar app.jar"
