@@ -11,7 +11,7 @@
       message: formData.get('message')
     };
 
-    fetch('https://easyen-front-end.onrender.com/', {
+    fetch('https://easyen-front-end.onrender.com/api/contact', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
