@@ -12,4 +12,4 @@ COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
 
 # ✅ Здесь ключевой момент: переменная PORT будет правильно подставлена
-CMD exec java -Dspring.profiles.active=railway -Dserver.port=$PORT -jar app.jar
+ENTRYPOINT exec java -Dspring.profiles.active=railway -Dserver.port=$PORT -jar app.jar
