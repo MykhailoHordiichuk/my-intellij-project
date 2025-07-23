@@ -8,4 +8,4 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-Dspring.profiles.active=railway", "-Dserver.port=${PORT}", "-jar", "app.jar"]
+CMD exec java -Dspring.profiles.active=railway -Dserver.port=$PORT -jar app.jar
