@@ -61,7 +61,7 @@ loginForm.addEventListener('submit', function (e) {
     password: formData.get('password')
   };
 
-  fetch('http://localhost:8080/api/auth/login	', {
+  fetch('https://easyen-front-end.onrender.com/api/auth/login	', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ create_account_form.addEventListener('submit', function(e){
     fullName: formData.get('fullname')
   };
 
- fetch('http://localhost:8080/api/auth/register	', {
+ fetch('https://easyen-front-end.onrender.com/api/auth/register	', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
