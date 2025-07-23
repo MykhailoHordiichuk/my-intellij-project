@@ -8,6 +8,4 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
-
-# ✅ Исправлено: подставляем переменную окружения PORT корректно
-ENTRYPOINT sh -c "java -Dspring.profiles.active=railway -Dserver.port=$PORT -jar app.jar"
+ENTRYPOINT ["java", "-Dspring.profiles.active=railway", "-Dserver.port=${PORT}", "-jar", "app.jar"]
