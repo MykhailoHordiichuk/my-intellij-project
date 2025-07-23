@@ -8,7 +8,4 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
-
-# ✅ Используем ENV вместо переменной в ENTRYPOINT
-ENV PORT=8080
-ENTRYPOINT ["sh", "-c", "java -Dspring.profiles.active=railway -Dserver.port=$PORT -jar app.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=railway", "-Dserver.port=${PORT}", "-jar", "app.jar"]
