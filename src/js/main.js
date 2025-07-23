@@ -11,7 +11,7 @@
       message: formData.get('message')
     };
 
-    fetch('http://localhost:8080/api/contact', {
+    fetch('https://easyen-front-end.onrender.com/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
