@@ -90,36 +90,29 @@
         <div class="modal-body">
          <form class="row g-3" id="create_account_form">
             <div class="col-12">
-              <label for="UserName" class="form-label">UserName (Login)</label>
-              <input type="text" class="form-control" id="UserName" name="username" placeholder="UserName" required>
+              <label for="FirstName" class="form-label">First Name</label>
+              <input type="text" class="form-control" id="FirstName" name="firstname" placeholder="First Name" required>
+            </div>
+              <div class="col-12">
+              <label for="LastName" class="form-label">Last Name</label>
+              <input type="text" class="form-control" id="LastName" name="lastname"  placeholder="Last Name" required>
             </div>
             <div class="col-md-6">
               <label for="Email" class="form-label">Email</label>
-              <input type="email" class="form-control" name="email" id="Email" required>
+              <input type="email" class="form-control" name="email" id="Email" placeholder="Email" required>
             </div>
             <div class="col-md-6">
               <label for="Password" class="form-label">Password</label>
-              <input type="password" class="form-control" name="password" id="Password" required>
-            </div>          
-            <div class="col-12">
-              <label for="FullName" class="form-label">FullName</label>
-              <input type="text" class="form-control" id="FullName" name="fullname"  placeholder="FullName" required>
-            </div>
-            
-            <div class="col-12">
-              <div class="form-check">
-                <input class="form-check-input" name="student" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">
-                  Student
-                </label>
-              </div>  
-              <div class="form-check">
-                <input class="form-check-input" name="teacher" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">
-                 Teacher
-                </label>
-              </div>
-            </div>
+              <input type="password" class="form-control" name="password" id="Password" placeholder="Password" required>
+            </div>       
+              <div class="col-md-6">
+              <label for="Age" class="form-label">Age</label>
+              <input type="number" class="form-control" name="age" id="Age" placeholder="Age" required>
+            </div>      
+              <div class="col-md-6">
+              <label for="Phone" class="form-label">Phone Number</label>
+              <input type="phone" class="form-control" name="phone" id="Phone" placeholder="Phone Number" required>
+            </div>   
             <div class="col-12">
               <button type="submit" class="btn btn-primary reg-btn">Create</button>
             </div>

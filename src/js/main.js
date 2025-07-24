@@ -29,7 +29,7 @@ form.addEventListener('submit', function (e) {
       if (!res1.ok || !res2.ok) {
         const text1 = await res1.text();
         const text2 = await res2.text();
-        throw new Error(`Ошибка:\nСервер 1: ${res1.status} - ${text1}\nСервер 2: ${res2.status} - ${text2}`);
+        throw new Error('Login failed: one of the servers returned an error.');
       }
 
       responseEl.textContent = 'Are you message sended';
@@ -85,7 +85,7 @@ loginForm.addEventListener('submit', function (e) {
       const body2 = await res2.text();
 
       if (!res1.ok || !res2.ok) {
-        throw new Error(`Ошибка входа:\nСервер 1: ${res1.status} - ${body1}\nСервер 2: ${res2.status} - ${body2}`);
+        throw new Error('Login failed: one of the servers returned an error.');
       }
 
       resultSignIn.textContent = 'Success Login';
@@ -125,10 +125,12 @@ create_account_form.addEventListener('submit', function(e) {
   const formData = new FormData(create_account_form);
 
   const data = {
-    username: formData.get('username'),
+    firstname: formData.get('firstname'),
+    lastname: formData.get('lastname'),
     email: formData.get('email'),
     password: formData.get('password'),
-    fullName: formData.get('fullname')
+    age: formData.get('age'),
+    phone: formData.get('phone')
   };
 
   const requestOptions = {
@@ -141,10 +143,10 @@ create_account_form.addEventListener('submit', function(e) {
   };
 
   // Запрос 1
-  const req1 = fetch('https://easyen-front-end.onrender.com/api/auth/register', requestOptions);
+  const req1 = fetch('https://easyen-front-end.onrender.com/api/sudent/login', requestOptions);
 
   // Запрос 2 (пример: другой адрес)
-  const req2 = fetch('https://easyeng-ccwf.onrender.com/api/auth/register', requestOptions);
+  const req2 = fetch('https://easyeng-ccwf.onrender.com/api/student/login', requestOptions);
 
   // Параллельное выполнение обоих запросов
   Promise.all([req1, req2])
@@ -153,9 +155,11 @@ create_account_form.addEventListener('submit', function(e) {
       const body2 = await res2.text();
 
       if (!res1.ok || !res2.ok) {
-        throw new Error('Ошибка одного из запросов:\n' +
-                        `1: ${res1.status} - ${body1}\n` +
-                        `2: ${res2.status} - ${body2}`);
+           throw new Error(
+        `Login failed:\n` +
+        `Server 1: ${res1.status} - ${body1}\n` +
+        `Server 2: ${res2.status} - ${body2}`
+        );
       }
 
       restul_create_user.textContent = 'You are seccessfully regestrierd!';
