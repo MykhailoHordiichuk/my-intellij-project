@@ -76,8 +76,8 @@ loginForm.addEventListener('submit', function (e) {
   };
 
   // Два параллельных login-запроса
-  const req1 = fetch('https://easyen-front-end.onrender.com/api/auth/login', requestOptions);
-  const req2 = fetch('https://easyeng-ccwf.onrender.com/api/auth/login', requestOptions);
+  const req1 = fetch('https://easyen-front-end.onrender.com/api/user/login', requestOptions);
+  const req2 = fetch('https://easyeng-ccwf.onrender.com/api/user/login', requestOptions);
 
   Promise.all([req1, req2])
     .then(async ([res1, res2]) => {
@@ -143,10 +143,10 @@ create_account_form.addEventListener('submit', function(e) {
   };
 
   // Запрос 1
-  const req1 = fetch('https://easyen-front-end.onrender.com/api/sudent/login', requestOptions);
+  const req1 = fetch('https://easyen-front-end.onrender.com/api/user/register', requestOptions);
 
   // Запрос 2 (пример: другой адрес)
-  const req2 = fetch('https://easyeng-ccwf.onrender.com/api/student/login', requestOptions);
+  const req2 = fetch('https://easyeng-ccwf.onrender.com/api/user/register', requestOptions);
 
   // Параллельное выполнение обоих запросов
   Promise.all([req1, req2])
