@@ -10,8 +10,7 @@ import spring_data_rest.dto.UserRegisterDTO;
 import spring_data_rest.entity.User;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -25,10 +24,13 @@ public class UserController {
 
     // 🔐 Register
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserRegisterDTO request) {
+    public ResponseEntity<Map<String, String>> register(@RequestBody UserRegisterDTO request) {
         Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
         if (existingUser.isPresent()) {
-            return ResponseEntity.badRequest().body("User with email '" + request.getEmail() + "' already exists");
+            return ResponseEntity.badRequest().body(Map.of(
+                    "error", "User with email already exists",
+                    "email", request.getEmail()
+            ));
         }
 
         User user = new User();
@@ -41,24 +43,37 @@ public class UserController {
         user.setRole("USER");
 
         userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully: " + user.getEmail());
+
+        return ResponseEntity.ok(Map.of(
+                "message", "User registered successfully",
+                "email", user.getEmail()
+        ));
     }
 
     // 🔐 Login
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserLoginDTO request) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody UserLoginDTO request) {
         Optional<User> userOpt = userRepository.findByEmail(request.getEmail());
 
         if (userOpt.isEmpty()) {
-            return ResponseEntity.status(404).body("User not found with email: " + request.getEmail());
+            return ResponseEntity.status(404).body(Map.of(
+                    "error", "User not found",
+                    "email", request.getEmail()
+            ));
         }
 
         User user = userOpt.get();
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            return ResponseEntity.status(401).body("Invalid password for email: " + request.getEmail());
+            return ResponseEntity.status(401).body(Map.of(
+                    "error", "Invalid password",
+                    "email", request.getEmail()
+            ));
         }
 
-        return ResponseEntity.ok("Login successful for: " + user.getEmail());
+        return ResponseEntity.ok(Map.of(
+                "message", "Login successful",
+                "email", user.getEmail()
+        ));
     }
 
     // 📥 Get all users
@@ -92,13 +107,19 @@ public class UserController {
 
     // ❌ Delete user
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable int id) {
+    public ResponseEntity<Map<String, String>> deleteUser(@PathVariable int id) {
         Optional<User> userOpt = userRepository.findById(id);
         if (userOpt.isEmpty()) {
-            return ResponseEntity.status(404).body("User not found with ID: " + id);
+            return ResponseEntity.status(404).body(Map.of(
+                    "error", "User not found",
+                    "id", String.valueOf(id)
+            ));
         }
         String deletedEmail = userOpt.get().getEmail();
         userRepository.deleteById(id);
-        return ResponseEntity.ok("User deleted: " + deletedEmail);
+        return ResponseEntity.ok(Map.of(
+                "message", "User deleted",
+                "email", deletedEmail
+        ));
     }
 }
