@@ -1,30 +1,38 @@
-  const form = document.getElementById('studentForm');
-  const responseEl = document.getElementById('response');
+const form = document.getElementById('studentForm');
+const responseEl = document.getElementById('response');
 
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
 
-    const formData = new FormData(form);
-    const data = {
-      name: formData.get('fullname'),
-      email: formData.get('email'),
-      message: formData.get('message')
-    };
+  const formData = new FormData(form);
+  const data = {
+    name: formData.get('fullname'),
+    email: formData.get('email'),
+    message: formData.get('message')
+  };
 
-    fetch('https://easyen-front-end.onrender.com/api/contact', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + btoa('michael:qwerty')
-      },
-      body: JSON.stringify(data)
-    })
-    .then(res => {
-      if (!res.ok) throw new Error('Request failed: ' + res.status);
-      return res.json();
-    })
-    .then(result => {
-      responseEl.textContent = 'Message sent successfully!';
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + btoa('michael:qwerty')
+    },
+    body: JSON.stringify(data)
+  };
+
+  // Два запроса
+  const req1 = fetch('https://easyen-front-end.onrender.com/api/contact', requestOptions);
+  const req2 = fetch('https://easyeng-ccwf.onrender.com/api/contact', requestOptions);
+
+  Promise.all([req1, req2])
+    .then(async ([res1, res2]) => {
+      if (!res1.ok || !res2.ok) {
+        const text1 = await res1.text();
+        const text2 = await res2.text();
+        throw new Error(`Ошибка:\nСервер 1: ${res1.status} - ${text1}\nСервер 2: ${res2.status} - ${text2}`);
+      }
+
+      responseEl.textContent = 'Are you message sended';
       responseEl.className = 'response-msg success';
       form.reset();
 
@@ -35,19 +43,16 @@
     })
     .catch(err => {
       console.error(err);
-      responseEl.textContent = 'Error sending message: ' + err.message;
-      responseEl.className = 'response-message error';
+      responseEl.textContent = 'Error ' + err.message;
+      responseEl.className = 'response-msg error';
 
       setTimeout(() => {
         responseEl.textContent = '';
         responseEl.className = 'response-msg';
       }, 5000);
     });
-  });
+});
 
-
-
-  // login form
 
 const loginForm = document.getElementById('login');
 const resultSignIn = document.getElementById('result_signIn');
@@ -61,43 +66,48 @@ loginForm.addEventListener('submit', function (e) {
     password: formData.get('password')
   };
 
-  fetch('https://easyen-front-end.onrender.com/api/auth/login	', {
+  const requestOptions = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Basic ' + btoa('michael:qwerty') // если требуется basic auth
+      'Authorization': 'Basic ' + btoa('michael:qwerty')
     },
     body: JSON.stringify(data)
-  })
-  .then(async res => {
-    const responseBody = await res.text(); // читаем как текст (или res.json() если точно JSON)
-    
-    if (!res.ok) {
-      throw new Error(responseBody || `Login failed: ${res.status}`);
-    }
+  };
 
-    resultSignIn.textContent = 'Login successful!';
-    resultSignIn.className = 'response-msg success';
-    loginForm.reset();
+  // Два параллельных login-запроса
+  const req1 = fetch('https://easyen-front-end.onrender.com/api/auth/login', requestOptions);
+  const req2 = fetch('https://easyeng-ccwf.onrender.com/api/auth/login', requestOptions);
 
-    setTimeout(() => {
-      resultSignIn.textContent = '';
-      resultSignIn.className = 'response-msg';
-    }, 5000);
-  })
-  .catch(err => {
-    console.error(err);
-    resultSignIn.textContent = 'Ошибка: ' + err.message;
-    resultSignIn.className = 'response-msg error';
+  Promise.all([req1, req2])
+    .then(async ([res1, res2]) => {
+      const body1 = await res1.text();
+      const body2 = await res2.text();
 
-    setTimeout(() => {
-      resultSignIn.textContent = '';
-      resultSignIn.className = 'response-msg';
-    }, 5000);
-  });
+      if (!res1.ok || !res2.ok) {
+        throw new Error(`Ошибка входа:\nСервер 1: ${res1.status} - ${body1}\nСервер 2: ${res2.status} - ${body2}`);
+      }
+
+      resultSignIn.textContent = 'Success Login';
+      resultSignIn.className = 'response-msg success';
+      loginForm.reset();
+
+      setTimeout(() => {
+        resultSignIn.textContent = '';
+        resultSignIn.className = 'response-msg';
+      }, 5000);
+    })
+    .catch(err => {
+      console.error(err);
+      resultSignIn.textContent = 'Error: ' + err.message;
+      resultSignIn.className = 'response-msg error';
+
+      setTimeout(() => {
+        resultSignIn.textContent = '';
+        resultSignIn.className = 'response-msg';
+      }, 5000);
+    });
 });
-
-
 
 
 
@@ -110,8 +120,7 @@ const restul_create_user = document.getElementById('result_create_account');
 
 
 
-create_account_form.addEventListener('submit', function(e){
-
+create_account_form.addEventListener('submit', function(e) {
   e.preventDefault();
   const formData = new FormData(create_account_form);
 
@@ -122,38 +131,50 @@ create_account_form.addEventListener('submit', function(e){
     fullName: formData.get('fullname')
   };
 
- fetch('https://easyen-front-end.onrender.com/api/auth/register	', {
+  const requestOptions = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Basic ' + btoa('michael:qwerty') // если требуется basic auth
+      'Authorization': 'Basic ' + btoa('michael:qwerty')
     },
     body: JSON.stringify(data)
-  })
-  .then(async res => {
-    const responseBody = await res.text(); // читаем как текст (или res.json() если точно JSON)
-    
-    if (!res.ok) {
-      throw new Error(responseBody || `Login failed: ${res.status}`);
-    }
+  };
 
-    restul_create_user.textContent = 'Login successful!';
-    restul_create_user.className = 'response-msg success';
-    create_account_form.reset();
+  // Запрос 1
+  const req1 = fetch('https://easyen-front-end.onrender.com/api/auth/register', requestOptions);
 
-    setTimeout(() => {
-      restul_create_user.textContent = '';
-      restul_create_user.className = 'response-msg';
-    }, 5000);
-  })
-  .catch(err => {
-    console.error(err);
-    restul_create_user.textContent = 'Ошибка: ' + err.message;
-    restul_create_user.className = 'response-msg error';
+  // Запрос 2 (пример: другой адрес)
+  const req2 = fetch('https://easyeng-ccwf.onrender.com/api/auth/register', requestOptions);
 
-    setTimeout(() => {
-      restul_create_user.textContent = '';
-      restul_create_user.className = 'response-msg';
-    }, 5000);
-  });
+  // Параллельное выполнение обоих запросов
+  Promise.all([req1, req2])
+    .then(async ([res1, res2]) => {
+      const body1 = await res1.text();
+      const body2 = await res2.text();
+
+      if (!res1.ok || !res2.ok) {
+        throw new Error('Ошибка одного из запросов:\n' +
+                        `1: ${res1.status} - ${body1}\n` +
+                        `2: ${res2.status} - ${body2}`);
+      }
+
+      restul_create_user.textContent = 'You are seccessfully regestrierd!';
+      restul_create_user.className = 'response-msg success';
+      create_account_form.reset();
+
+      setTimeout(() => {
+        restul_create_user.textContent = '';
+        restul_create_user.className = 'response-msg';
+      }, 5000);
+    })
+    .catch(err => {
+      console.error(err);
+      restul_create_user.textContent = 'Error: ' + err.message;
+      restul_create_user.className = 'response-msg error';
+
+      setTimeout(() => {
+        restul_create_user.textContent = '';
+        restul_create_user.className = 'response-msg';
+      }, 5000);
+    });
 });
