@@ -30,7 +30,7 @@ public class SecurityConfig {
                         // Эндпоинты Actuator также разрешаем без аутентификации (если нужно)
                         .requestMatchers("/actuator/**").permitAll()
                         // Разрешаем регистрацию и логин без авторизации
-                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/users/**").permitAll()
                         // Все остальные /api/** требуют аутентификации
                         .requestMatchers("/api/**").authenticated()
                         // .requestMatchers("/api/**").permitAll()
