@@ -1,6 +1,10 @@
 const form = document.getElementById('studentForm');
 const responseEl = document.getElementById('response');
 
+// 💡 Укажи здесь нужные адреса API (можно один или оба)
+const API_SERVER_1 = 'https://easyen-front-end.onrender.com';
+const API_SERVER_2 = 'https://easyeng-ccwf.onrender.com';
+
 form.addEventListener('submit', function (e) {
   e.preventDefault();
 
@@ -20,19 +24,26 @@ form.addEventListener('submit', function (e) {
     body: JSON.stringify(data)
   };
 
-  // Два запроса
-  const req1 = fetch('https://easyen-front-end.onrender.com/api/contact', requestOptions);
-  const req2 = fetch('https://easyeng-ccwf.onrender.com/api/contact', requestOptions);
+  // ⬇️ Собираем нужные запросы
+  const requests = [];
 
-  Promise.all([req1, req2])
-    .then(async ([res1, res2]) => {
-      if (!res1.ok || !res2.ok) {
-        const text1 = await res1.text();
-        const text2 = await res2.text();
-        throw new Error('Login failed: one of the servers returned an error.');
+  if (API_SERVER_1) {
+    requests.push(fetch(`${API_SERVER_1}/api/contact`, requestOptions));
+  }
+
+  if (API_SERVER_2) {
+    requests.push(fetch(`${API_SERVER_2}/api/contact`, requestOptions));
+  }
+
+  Promise.all(requests)
+    .then(async (responses) => {
+      const failed = responses.filter(res => !res.ok);
+      if (failed.length > 0) {
+        const texts = await Promise.all(failed.map(r => r.text()));
+        throw new Error('One or more servers returned an error: ' + texts.join('; '));
       }
 
-      responseEl.textContent = 'Are you message sended';
+      responseEl.textContent = 'Your message was sent successfully!';
       responseEl.className = 'response-msg success';
       form.reset();
 
@@ -43,7 +54,7 @@ form.addEventListener('submit', function (e) {
     })
     .catch(err => {
       console.error(err);
-      responseEl.textContent = 'Error ' + err.message;
+      responseEl.textContent = 'Error: ' + err.message;
       responseEl.className = 'response-msg error';
 
       setTimeout(() => {
@@ -52,7 +63,6 @@ form.addEventListener('submit', function (e) {
       }, 5000);
     });
 });
-
 
 const loginForm = document.getElementById('login');
 const resultSignIn = document.getElementById('result_signIn');
