@@ -1,10 +1,7 @@
 package spring_data_rest.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-
-import java.util.List;
 
 @Entity
 @Table(name = "courses")
@@ -30,14 +27,12 @@ public class Course {
     @Column(name = "durationWeeks")
     private int durationWeeks;
 
-    @JsonManagedReference // добавлено для teacher
+    @JsonManagedReference // teacher relation
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Employee teacher;
 
-    @JsonBackReference // чтобы не зациклиться
-    @ManyToMany(mappedBy = "courses")
-    private List<Student> students;
+    // 🔥 Removed: List<Student> students;
 
     public Course() {}
 
@@ -104,13 +99,5 @@ public class Course {
 
     public void setTeacher(Employee teacher) {
         this.teacher = teacher;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
     }
 }
