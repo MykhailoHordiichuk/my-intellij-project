@@ -270,7 +270,7 @@ html {
             content: "";
             position: absolute;
             top: -58px; // подстрой под себя
-            left: -40px; // сдвиг влево
+            left: 10px; // сдвиг влево
             width: 110%; // чуть больше основного блока
             height: 110%; // можно подогнать вручную
             background-image: url('../img/one.png');
@@ -620,6 +620,7 @@ html {
 
     .result-card-second::after{
         content: url(../img/line1.png);
+        width: 100px;
         position: absolute;
         top: 22px;
         left: -192px;
@@ -632,7 +633,7 @@ html {
         right: -200px;
     }
 
-    @media  (min-width: 320px) and (max-width:768px){
+    @media  (min-width: 320px) and (max-width:1024px){
         .result-card-second::after{
            display: none;
         }
@@ -705,7 +706,7 @@ html {
   
         text-align: center;
         img{
-            max-width: 550px;      
+            max-width: 100%;      
             
             
             @media (max-width:425px){
