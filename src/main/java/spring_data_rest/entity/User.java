@@ -1,9 +1,12 @@
 package spring_data_rest.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
-@Table(name = "users") // не "user", чтобы не конфликтовать с SQL-зарезервированным словом
+@Table(name = "users") // не "user", чтобы не конфликтовать с SQL
 public class User {
 
     @Id
@@ -11,75 +14,71 @@ public class User {
     private int id;
 
     @Column(unique = true, nullable = false)
-    private String username; // используется для логина
-
-    @Column(unique = true, nullable = false)
     private String email;
 
     @Column(nullable = false)
     private String password;
 
-    private String role = "USER"; // роль по умолчанию
+    @Column(nullable = true)
+    private String firstName;
 
-    private String fullName;
+    @Column(nullable = true)
+    private String lastName;
 
-    private boolean enabled = true; // включён по умолчанию
+    @Column(nullable = true)
+    private Integer age;
 
-    // ====== Геттеры и сеттеры ======
+    @Column(nullable = true)
+    private String phoneNumber;
 
-    public int getId() {
-        return id;
-    }
+    @Column(nullable = true)
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate registeredAt;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    @Column(nullable = false)
+    private String role = "USER"; // USER / ADMIN / TEACHER
 
-    public String getUsername() {
-        return username;
-    }
+    private boolean enabled = true;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    // ===== Getters & Setters =====
 
-    public String getEmail() {
-        return email;
-    }
+    public int getId() { return id; }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public void setId(int id) { this.id = id; }
 
-    public String getPassword() {
-        return password;
-    }
+    public String getEmail() { return email; }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public void setEmail(String email) { this.email = email; }
 
-    public String getRole() {
-        return role;
-    }
+    public String getPassword() { return password; }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
+    public void setPassword(String password) { this.password = password; }
 
-    public String getFullName() {
-        return fullName;
-    }
+    public String getFirstName() { return firstName; }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
+    public String getLastName() { return lastName; }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+
+    public Integer getAge() { return age; }
+
+    public void setAge(Integer age) { this.age = age; }
+
+    public String getPhoneNumber() { return phoneNumber; }
+
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+
+    public LocalDate getRegisteredAt() { return registeredAt; }
+
+    public void setRegisteredAt(LocalDate registeredAt) { this.registeredAt = registeredAt; }
+
+    public String getRole() { return role; }
+
+    public void setRole(String role) { this.role = role; }
+
+    public boolean isEnabled() { return enabled; }
+
+    public void setEnabled(boolean enabled) { this.enabled = enabled; }
 }
