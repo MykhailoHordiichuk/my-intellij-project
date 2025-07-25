@@ -128,8 +128,6 @@ loginForm.addEventListener('submit', function (e) {
 const create_account_form = document.getElementById('create_account_form');
 const restul_create_user = document.getElementById('result_create_account');
 
-
-
 create_account_form.addEventListener('submit', function(e) {
   e.preventDefault();
   const formData = new FormData(create_account_form);
@@ -152,34 +150,37 @@ create_account_form.addEventListener('submit', function(e) {
     body: JSON.stringify(data)
   };
 
-  // Запрос 1
   const req1 = fetch('https://easyen-front-end.onrender.com/api/users/register', requestOptions);
-
-  // Запрос 2 (пример: другой адрес)
   const req2 = fetch('https://easyeng-ccwf.onrender.com/api/users/register', requestOptions);
 
-  // Параллельное выполнение обоих запросов
   Promise.all([req1, req2])
     .then(async ([res1, res2]) => {
-      const body1 = await res1.text();
-      const body2 = await res2.text();
+      const json1 = await res1.json().catch(() => ({}));
+      const json2 = await res2.json().catch(() => ({}));
 
       if (!res1.ok || !res2.ok) {
-           throw new Error(
-        `Login failed:\n` +
-        `Server 1: ${res1.status} - ${body1}\n` +
-        `Server 2: ${res2.status} - ${body2}`
+        throw new Error(
+          `Registration failed:\n` +
+          `Server 1: ${res1.status} - ${JSON.stringify(json1)}\n` +
+          `Server 2: ${res2.status} - ${JSON.stringify(json2)}`
         );
       }
 
-      restul_create_user.textContent = 'You are seccessfully regestrierd!';
+      const successMessage = json1.message || json2.message || 'Registration successful!';
+
+      restul_create_user.textContent = successMessage;
       restul_create_user.className = 'response-msg success';
       create_account_form.reset();
 
+      // Через 5 сек скрываем сообщение, через 10 сек скрываем форму
       setTimeout(() => {
         restul_create_user.textContent = '';
         restul_create_user.className = 'response-msg';
       }, 5000);
+
+      setTimeout(() => {
+        create_account_form.style.display = 'none';
+      }, 10000);
     })
     .catch(err => {
       console.error(err);
