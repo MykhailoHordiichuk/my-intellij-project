@@ -1,5 +1,6 @@
 @use 'variables.scss' as *;
 @use 'dashboard.scss' as *;
+
 *{
     margin: 0;
     padding: 0;
@@ -25,7 +26,7 @@ html {
         padding-right: 1rem;
     }
 
-}
+}   
 
 
 .navbar-brand{
@@ -77,6 +78,10 @@ html {
 
 .header{
     padding-top: 20px;
+    background-color: $white;
+    position: fixed;
+    top: 0;left: 0;right: 0;
+    z-index: 999;
 }
 
 
@@ -157,7 +162,7 @@ html {
 
 .hero-left{
 
-
+    position: relative;
     align-items: center;
 
     .hero-left-text{
@@ -250,6 +255,10 @@ html {
         }
         
     }
+
+    .show_video{
+       position: absolute;
+    }
 }
 
 
@@ -320,6 +329,41 @@ html {
     }
 
 }
+
+    .video-modal {
+    display: none; /* скрыто по умолчанию */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    }
+
+    .video-overlay {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    aspect-ratio: 16 / 9;
+    }
+
+    .video-container iframe {
+    width: 100%;
+    height: 600px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .close-video {
+    position: absolute;
+    top: -60px;
+    right: 0;
+    font-size: 36px;
+    color: white;
+    cursor: pointer;
+    }
 
 
 
@@ -694,7 +738,7 @@ html {
             }
 
 
-            @media (max-width:425px){
+            @media (max-width:475px){
                 display: block;
             }
         }
@@ -852,6 +896,7 @@ html {
     }
 
 
+
     .modal-body{
         .form-control{
             border: 1px solid rgba($color: #000000, $alpha: .2);
@@ -859,7 +904,7 @@ html {
             border-radius: 12px;
         }
 
-
+        
 
         .reg-btn{
             background-color: $green;
@@ -883,4 +928,11 @@ html {
             }
         }
     }
+
+    .btn_footer{
+        text-align: center;
+    }
 }
+
+
+

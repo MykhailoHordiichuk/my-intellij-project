@@ -66,6 +66,7 @@ form.addEventListener('submit', function (e) {
 
 const loginForm = document.getElementById('login');
 const resultSignIn = document.getElementById('result_signIn');
+const clearFormBtnRegister = document.getElementById('clear_data_form_register');
 
 loginForm.addEventListener('submit', function (e) {
   e.preventDefault();
@@ -119,6 +120,16 @@ loginForm.addEventListener('submit', function (e) {
     });
 });
 
+clearFormBtnRegister.addEventListener('click', () => {
+  // Очистим каждый input вручную
+  loginForm.querySelectorAll('input').forEach(input => {
+    input.value = '';
+  });
+
+
+
+});
+
 
 
 
@@ -127,6 +138,7 @@ loginForm.addEventListener('submit', function (e) {
 
 const create_account_form = document.getElementById('create_account_form');
 const result_create_account = document.getElementById('response-msg');
+const clearFormBtnLogin = document.getElementById('clear_form_data');
 
 create_account_form.addEventListener('submit', function(e) {
   e.preventDefault();
@@ -192,4 +204,38 @@ create_account_form.addEventListener('submit', function(e) {
         result_create_account.className = 'response-msg';
       }, 5000);
     });
+});
+
+clearFormBtnLogin.addEventListener('click', () => {
+  // Очистим каждый input вручную
+  create_account_form.querySelectorAll('input').forEach(input => {
+    input.value = '';
+  });
+
+  // Убираем сообщение
+  result_create_account.textContent = '';
+  result_create_account.className = 'response-msg';
+
+});
+
+
+
+
+
+const openBtn = document.getElementById('link-video');
+const modal = document.getElementById('videoModal');
+const closeBtn = document.getElementById('closeVideo');
+const iframe = document.getElementById('videoFrame');
+const overlay = document.getElementById('videoModal');
+
+openBtn.addEventListener('click', function(e) {
+  e.preventDefault();
+  overlay.classList.add('animate__fadeInDown');
+  modal.style.display = 'flex';
+});
+
+closeBtn.addEventListener('click', function () {
+  modal.style.display = 'none';
+  // Останавливаем видео
+  iframe.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
 });

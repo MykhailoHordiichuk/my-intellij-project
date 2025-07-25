@@ -21,6 +21,7 @@
     "sass": "^1.89.2"
   },
   "dependencies": {
-    "@splidejs/splide": "^4.1.4"
+    "@splidejs/splide": "^4.1.4",
+    "animate.css": "^4.1.1"
   }
 }
