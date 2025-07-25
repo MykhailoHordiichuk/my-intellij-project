@@ -126,7 +126,7 @@ loginForm.addEventListener('submit', function (e) {
 
 
 const create_account_form = document.getElementById('create_account_form');
-const restul_create_user = document.getElementById('result_create_account');
+const restul_create_user = document.getElementById('response-msg');
 
 create_account_form.addEventListener('submit', function(e) {
   e.preventDefault();
