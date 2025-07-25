@@ -126,7 +126,7 @@ loginForm.addEventListener('submit', function (e) {
 
 
 const create_account_form = document.getElementById('create_account_form');
-const restul_create_user = document.getElementById('response-msg');
+const result_create_account = document.getElementById('response-msg');
 
 create_account_form.addEventListener('submit', function(e) {
   e.preventDefault();
@@ -168,14 +168,14 @@ create_account_form.addEventListener('submit', function(e) {
 
       const successMessage = json1.message || json2.message || 'Registration successful!';
 
-      restul_create_user.textContent = successMessage;
-      restul_create_user.className = 'response-msg success';
+      result_create_account.textContent = successMessage;
+      result_create_account.className = 'response-msg success';
       create_account_form.reset();
 
       // Через 5 сек скрываем сообщение, через 10 сек скрываем форму
       setTimeout(() => {
-        restul_create_user.textContent = '';
-        restul_create_user.className = 'response-msg';
+        result_create_account.textContent = '';
+        result_create_account.className = 'response-msg';
       }, 5000);
 
       setTimeout(() => {
@@ -184,12 +184,12 @@ create_account_form.addEventListener('submit', function(e) {
     })
     .catch(err => {
       console.error(err);
-      restul_create_user.textContent = 'Error: ' + err.message;
-      restul_create_user.className = 'response-msg error';
+      result_create_account.textContent = 'Error: ' + err.message;
+      result_create_account.className = 'response-msg error';
 
       setTimeout(() => {
-        restul_create_user.textContent = '';
-        restul_create_user.className = 'response-msg';
+        result_create_account.textContent = '';
+        result_create_account.className = 'response-msg';
       }, 5000);
     });
 });
