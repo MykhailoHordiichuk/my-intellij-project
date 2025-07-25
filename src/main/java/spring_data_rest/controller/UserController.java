@@ -38,15 +38,23 @@ public class UserController {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
+        user.setAge(request.getAge());
+        user.setPhoneNumber(request.getPhoneNumber());
         user.setRegisteredAt(LocalDate.now());
         user.setEnabled(true);
         user.setRole("USER");
 
         userRepository.save(user);
 
+        //примечание в return password - user.getPassword() возвращается "хэшированым" в JSON
         return ResponseEntity.ok(Map.of(
                 "message", "User registered successfully",
-                "email", user.getEmail()
+                "email", user.getEmail(),
+                "password", user.getPassword(),
+                "firstName", user.getFirstName(),
+                "lastName", user.getLastName(),
+                "age", String.valueOf(user.getAge()),
+                "phoneNumber", user.getPhoneNumber()
         ));
     }
 
@@ -69,10 +77,15 @@ public class UserController {
                     "email", request.getEmail()
             ));
         }
-
+        //пароль так же возвращается "хэшированым"
         return ResponseEntity.ok(Map.of(
                 "message", "Login successful",
-                "email", user.getEmail()
+                "email", user.getEmail(),
+                "password", user.getPassword(),
+                "firstName", user.getFirstName(),
+                "lastName", user.getLastName(),
+                "age", String.valueOf(user.getAge()),
+                "phoneNumber", user.getPhoneNumber()
         ));
     }
 
