@@ -135,12 +135,12 @@ create_account_form.addEventListener('submit', function(e) {
   const formData = new FormData(create_account_form);
 
   const data = {
-    first_name: formData.get('firstname'),
-    last_name: formData.get('lastname'),
+    firstName: formData.get('firstname'),
+    lastName: formData.get('lastname'),
     email: formData.get('email'),
     password: formData.get('password'),
     age: formData.get('age'),
-    phone_number: formData.get('phone')
+    phoneNumber: formData.get('phone')
   };
 
   const requestOptions = {
