@@ -1,169 +1,118 @@
-# 🌍 Online Language School – Spring Boot REST API
 
-This is a Spring Boot REST API application for managing an online language school. It supports operations for managing students, courses, teachers (employees), static content pages, contact messages, and user authentication.
+# 🏫 EasyEng – Online Language School API (EN)
 
-🌐 Frontend (in development): https://easyeng.netlify.app/
+**EasyEng** — is a Spring Boot REST API for an online language school. Allows managing users, courses, teachers, content pages, and incoming contact messages. The service is deployed on Render.
+
+> 🔗 **Live Backend**: https://easyeng-ccwf.onrender.com  
+> 🌐 **Frontend (in development)**: https://easyeng.netlify.app  
+> 🎨 **Figma (design)**: [Design](https://www.figma.com/design/WwmXdOPnFgiTmbedoUQu9M/Untitled?node-id=0-1&m=dev&t=CSekH0d9fIuvgupt-1)  
+> 🧪 **Swagger UI**: https://easyeng-ccwf.onrender.com/swagger-ui/index.html  
 
 ---
 
 ## ✅ Features
 
-- Full CRUD support for:
-    - Students
-    - Courses
-    - Employees (Teachers)
-    - Contact messages
-    - Static page content
-- User registration and login with encrypted passwords
-- Relationship management:
-    - Many-to-Many between Students and Courses
-    - One-to-Many between Employee and Courses
-- In-memory H2 database (or external MySQL)
-- JSON serialization with cycle handling (`@JsonManagedReference`, `@JsonBackReference`)
-- Basic HTTP authentication (Spring Security)
-- Swagger UI available
+- 🔐 User registration and login
+- 📘 CRUD for courses and teachers
+- 💬 Sending messages via contact form
+- 🧾 Managing static content (pages)
+- ⚙️ Swagger UI and Actuator endpoints
+- 🔐 Basic Auth + CORS
+- 🔄 Passwords are hashed using BCrypt
+- 📦 Ready for deployment (Render Docker build)
 
 ---
 
-## 👥 Authentication & Users
-- `POST /api/auth/register` – Register a new user
-- `POST /api/auth/login` – Login with email and password
-  
-User entity fields:
-- `id`, `username`, `email`, `password (encrypted)`, `fullName`, `role`, `enabled`
+## 🛡️ Security
 
-## 🗂️ Entities Overview
-
-### 🧑‍🎓 Student
-- `id`, `firstName`, `lastName`, `email`
-- Enrolled in many courses (Many-to-Many)
-
-### 📘 Course
-- `id`, `language`, `level`, `description`, `price`, `durationWeeks`
-- Linked to one teacher (Employee)
-- Has many students (Many-to-Many)
-
-### 👩‍🏫 Employee (Teacher)
-- `id`, `firstName`, `lastName`, `email`, `experienceYears`, `hourlyRate`
-- Teaches multiple courses (One-to-Many)
-
-### 💬 ContactMessage
-- `id`, `name`, `email`, `message`, `sentAt`
-
-### 🧾 PageContent
-- `id`, `title`, `content`
-### 👤 User
-- `id`, `username`, `email`, `password (encrypted)`, `fullName`, `role`, `enabled`
+- `/api/users/**` — registration and login (open access)
+- `/api/**` — require Basic Auth (`michael:qwerty`)
+- `/swagger-ui/**` и `/v3/api-docs/**` — open access
+- CSRF is disabled (for REST)
 
 ---
 
-## 🚀 How to Run
+## 📁 API Structure
 
-1. Clone the project:
-   ```bash
-   git clone https://github.com/your-name/language-school-api.git
-   cd language-school-api
-   ```
+### 👤 Users (`/api/users`)
+| Method | Endpoint           | Description                      |
+|--------|--------------------|-------------------------------|
+| POST   | `/register`        | Register user      |
+| POST   | `/login`           | Login (password check)        |
+| GET    | `/`                | Get all users   |
+| GET    | `/{id}`            | Get by ID                |
+| PUT    | `/{id}`            | Update user         |
+| DELETE | `/{id}`            | Delete user          |
 
-2. Run the application with Maven:
-   ```bash
-   mvn spring-boot:run
-   ```
-
-3. The application will be available at:
-   ```
-   http://localhost:8080/
-   ```
+> DTO: `UserRegisterDTO`, `UserLoginDTO`
 
 ---
 
-## 🔗 REST API Endpoints
-### 🌐 Home
-| Method | Endpoint                      | Description                   |
-|--------|-------------------------------|-------------------------------|
-| GET    | `/`                           | Welcome message with link to Swagger              |
-
-### 👥 Auth
-| Method | Endpoint                       | Description                   |
-|--------|--------------------------------|-------------------------------|
-| POST   | `/api/auth/register`           | Register a new user            |
-| POST    | `/api/auth/login`              | Login with email/password       |
-
-### 🧑‍🎓 Students
-| Method | Endpoint                        | Description                   |
-|--------|----------------------------------|-------------------------------|
-| GET    | `/api/students`                 | Get all students              |
-| GET    | `/api/students/{id}`            | Get student by ID             |
-| POST   | `/api/students`                 | Create new student            |
-| PUT    | `/api/students/{id}`            | Update existing student       |
-| DELETE | `/api/students/{id}`            | Delete student                |
-| POST   | `/api/students/{id}/courses/{courseId}` | Enroll student in course |
-
-### 📘 Courses
-| Method | Endpoint              | Description              |
-|--------|------------------------|--------------------------|
-| GET    | `/api/courses`        | Get all courses          |
-| GET    | `/api/courses/{id}`   | Get course by ID         |
-| POST   | `/api/courses`        | Create new course        |
-| PUT    | `/api/courses/{id}`   | Update course            |
-| DELETE | `/api/courses/{id}`   | Delete course            |
-
-### 👩‍🏫 Employees (Teachers)
-| Method | Endpoint                   | Description                   |
-|--------|-----------------------------|-------------------------------|
-| GET    | `/api/employees`          | Get all employees             |
-| GET    | `/api/employees/{id}`     | Get employee by ID            |
-| POST   | `/api/employees`          | Create new employee           |
-| PUT    | `/api/employees/{id}`     | Update existing employee      |
-| DELETE | `/api/employees/{id}`     | Delete employee               |
-
-### 💬 Contact Messages
-| Method | Endpoint               | Description                  |
-|--------|--------------------------|------------------------------|
-| GET    | `/api/contact`         | Get all contact messages     |
-| GET    | `/api/contact/{id}`    | Get a specific message       |
-| POST   | `/api/contact`         | Submit a new message         |
-| DELETE | `/api/contact/{id}`    | Delete a message             |
-
-### 📟 Static Pages
-| Method | Endpoint             | Description                |
-|--------|------------------------|----------------------------|
-| GET    | `/api/pages`         | Get all static pages       |
-| GET    | `/api/pages/{id}`    | Get a specific page        |
-| POST   | `/api/pages`         | Create a new page          |
-| DELETE | `/api/pages/{id}`    | Delete a page              |
+### 📘 Courses (`/api/courses`)
+| Method | Endpoint           | Description                      |
+|--------|--------------------|-------------------------------|
+| GET    | `/`                | All courses                     |
+| GET    | `/{id}`            | Get course by ID           |
+| POST   | `/`                | Add new course           |
+| PUT    | `/{id}`            | Update курс                 |
+| DELETE | `/{id}`            | Delete курс                  |
 
 ---
 
-## 📦 Sample JSON Payloads
+### 👩‍🏫 Teachers (`/api/employees`)
+| Method | Endpoint           | Description                      |
+|--------|--------------------|-------------------------------|
+| GET    | `/`                | All teachers             |
+| GET    | `/{id}`            | Teacher by ID           |
+| POST   | `/`                | Add teacher        |
+| PUT    | `/{id}`            | Update                      |
+| DELETE | `/{id}`            | Delete                       |
 
-### Create Student
+---
+
+### 💬 Contact Messages (`/api/contact`)
+| Method | Endpoint           | Description                      |
+|--------|--------------------|-------------------------------|
+| GET    | `/`                | Get all messages        |
+| GET    | `/{id}`            | Get by ID                |
+| POST   | `/`                | Send message           |
+| DELETE | `/{id}`            | Delete                       |
+
+---
+
+### 📄 Static Pages (`/api/pages`)
+| Method | Endpoint           | Description                      |
+|--------|--------------------|-------------------------------|
+| GET    | `/`                | All pages                  |
+| GET    | `/{id}`            | Get by ID                |
+| POST   | `/`                | Create page              |
+| DELETE | `/{id}`            | Delete страницу              |
+
+---
+
+## 🧪 Example JSON Payloads
+
+### 🔐 Register user
 ```json
 {
-  "firstName": "Alice",
-  "lastName": "Johnson",
-  "email": "alice@example.com"
-}
-```
-### Register User
-```json
-{
-  "username": "michael",
-  "email": "michael@example.com",
-  "password": "qwerty123",
-  "fullName": "Michael Mustermann"
-}
-```
-### Login User
-```json
-{
-  "email": "michael@example.com",
-  "password": "qwerty123"
+  "email": "user@example.com",
+  "password": "123456",
+  "firstName": "John",
+  "lastName": "Doe",
+  "age": 25,
+  "phoneNumber": "+123456789"
 }
 ```
 
+### 🔐 Login
+```json
+{
+  "email": "user@example.com",
+  "password": "123456"
+}
+```
 
-### Create Course
+### ➕ New course
 ```json
 {
   "language": "German",
@@ -177,66 +126,81 @@ User entity fields:
 }
 ```
 
-### Create Employee
-```json
-{
-  "firstName": "John",
-  "lastName": "Smith",
-  "email": "john@example.com",
-  "experienceYears": 5,
-  "hourlyRate": 25
-}
-```
-
-### Submit Contact Message
+### ➕ New message
 ```json
 {
   "name": "Visitor",
   "email": "visitor@example.com",
-  "message": "I have a question about the German course."
+  "message": "Hello! I want to know more about your courses."
 }
 ```
 
 ---
 
-## ⚙️ Configuration
+## ⚙️ Technologies
 
-- Remote MySQL DB: `192.168.0.17:3306/my_db`
-- User: `remoteadmin`, Password: `springcourse`
-- Hibernate auto-DDL enabled
-- Basic Auth: `michael:qwerty` (in `application.properties`)
-- Swagger UI: http://localhost:8080/swagger-ui/index.html#/
-- Active profile: macmini
+- Java 17 + Spring Boot
+- Spring Data JPA + PostgreSQL
+- Spring Security (Basic Auth)
+- Swagger (springdoc-openapi)
+- Docker (multi-stage build)
+- Deploy on [Render](https://render.com)
+- CORS: `127.0.0.1:5500`, `easyeng.netlify.app`
+
 ---
 
-## 📁 Project Structure (src/main/java)
+## 🧾 Local Run
+
+```bash
+git clone https://github.com/MykhailoHordiichuk/my-intellij-project.git
+cd my-intellij-project
+
+# Run with Maven
+mvn spring-boot:run
 ```
-spring_data_rest
-├── config/
-├── controller/
-├── dao/
-├── dto/
-├── entity/
-└── SpringDataRestApplication.java
+
+> The application will be available at: `http://localhost:8080`
+
+---
+
+## 🔑 Test Authorization
+
+```bash
+Username: michael
+Password: qwerty
+```
+
+InMemory user is used for admin.
+
+---
+
+## 🔍 Swagger
+
+Available at:
+```
+/swagger-ui/index.html
 ```
 
 ---
 
-## 🔒 Security
+## 🧩 TODO / TODO / Ideas
 
-- All `/api/**` endpoints are protected with Basic Auth
-- Swagger & Actuator are publicly available
-- CSRF protection disabled
+- [ ] Replace Basic Auth with JWT
+- [ ] Implement roles: ADMIN / USER / TEACHER
+- [ ] Add validation for DTOs and responses
+- [ ] Integrate email notifications
+- [ ] Write unit tests for controllers
 
 ---
 
-## 🧑‍💼 Collaborating
-
-- Currently working on:
-    - Improved validation and error handling
-    - Full frontend integration via https://easyeng.netlify.app/
-    - New API endpoints and functionality
----
 ## 📃 License
 
-Free to use for learning and educational purposes.
+Free to use for educational and non-commercial purposes.
+
+---
+
+## 👨‍💻 Authors
+
+- Mykhailo Hordiichuk — Backend Developer (https://github.com/MykhailoHordiichuk/my-intellij-project.git)   
+- Hordiichuk Anna — UI/UX Design  
+- Karaman Kostiantyn — Frontend Developer
