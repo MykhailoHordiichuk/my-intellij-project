@@ -143,6 +143,7 @@
 - Spring Data JPA + PostgreSQL
 - Spring Security (Basic Auth)
 - Swagger (springdoc-openapi)
+- Lombok — simplifies entity classes by auto-generating getters, setters, constructors, etc.
 - Docker (multi-stage build)
 - Deploy on [Render](https://render.com)
 - CORS: `127.0.0.1:5500`, `easyeng.netlify.app`
@@ -178,7 +179,7 @@ InMemory user is used for admin.
 
 Available at:
 ```
-/swagger-ui/index.html
+https://easyeng-ccwf.onrender.com/swagger-ui/index.html 
 ```
 
 ---

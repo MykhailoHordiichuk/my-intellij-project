@@ -21,7 +21,7 @@ public class SecurityConfig {
     @Bean // Бин, настраивающий цепочку безопасности
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .httpBasic(Customizer.withDefaults()) // 💥 ОБЯЗАТЕЛЬНО ДЛЯ BASIC AUTH
+                .httpBasic(Customizer.withDefaults()) // ОБЯЗАТЕЛЬНО ДЛЯ BASIC AUTH
                 .cors(Customizer.withDefaults()) // <--- Включаем CORS
                 // Настройка правил авторизации запросов
                 .authorizeHttpRequests(auth -> auth
