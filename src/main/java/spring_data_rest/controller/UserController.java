@@ -22,7 +22,7 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // 🔐 Register
+    // Register
     @PostMapping("/register")
     public ResponseEntity<Map<String, String>> register(@RequestBody UserRegisterDTO request) {
         Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
@@ -58,7 +58,7 @@ public class UserController {
         ));
     }
 
-    // 🔐 Login
+    // Login
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody UserLoginDTO request) {
         Optional<User> userOpt = userRepository.findByEmail(request.getEmail());
@@ -89,13 +89,13 @@ public class UserController {
         ));
     }
 
-    // 📥 Get all users
+    // Get all users
     @GetMapping
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    // 📥 Get user by ID
+    // Get user by ID
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable int id) {
         return userRepository.findById(id)
@@ -103,7 +103,7 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // ✏️ Update user
+    // Update user
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User updated) {
         return userRepository.findById(id).map(user -> {
@@ -118,7 +118,7 @@ public class UserController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    // ❌ Delete user
+    // Delete user
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> deleteUser(@PathVariable int id) {
         Optional<User> userOpt = userRepository.findById(id);
