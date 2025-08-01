@@ -122,7 +122,7 @@ html {
 
 .login-register{
     position: relative;
-
+    
 
 
     &::after{
@@ -149,6 +149,14 @@ html {
 
     &:hover{
         color: $green;
+    }
+}
+
+.login{
+    color: $green;
+
+    &:hover{
+        color: $black;
     }
 }
 
@@ -435,6 +443,19 @@ html {
             margin-bottom: 16px;
         }
 
+        .moretxt {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.5s ease, opacity 0.5s ease;
+            display: block; /* Потрібен для анімації */
+        }
+
+        .moretxt.show {
+            max-height: 100px; /* або більше, залежно від вмісту */
+            opacity: 1;
+        }
+        
         .easy-btn-footer{
             font-family: $def-fronts;
             font-weight: 600;
@@ -939,3 +960,7 @@ html {
 
 
 
+// mobile menu
+
+
+// @media (min-width: 768px) and (max-width:)

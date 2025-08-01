@@ -239,3 +239,20 @@ closeBtn.addEventListener('click', function () {
   // Останавливаем видео
   iframe.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
 });
+
+
+document.querySelectorAll(".toggleButton").forEach((button) => {
+  button.addEventListener("click", function () {
+    const card = button.closest(".easy-text-body"); // знайти батьківський блок
+    const moreText = card.querySelector(".moretxt"); // знайти текст у межах цього блоку
+    const isShown = moreText.classList.contains("show");
+
+    if (isShown) {
+      moreText.classList.remove("show");
+      button.textContent = "learn more";
+    } else {
+      moreText.classList.add("show");
+      button.textContent = "show less";
+    }
+  });
+});
