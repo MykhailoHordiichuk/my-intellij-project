@@ -777,7 +777,7 @@ html {
             max-width: 100%;      
             
             
-            @media (max-width:425px){
+            @media (max-width:768px){
                 width: 100%;
             }
         }
@@ -962,5 +962,50 @@ html {
 
 // mobile menu
 
+.mobile_btn{
+    display: none;
+}
 
-// @media (min-width: 768px) and (max-width:)
+
+@media (max-width: 768px){
+        .navbar{
+            display: none;
+        }
+
+        .mobile_btn{
+            display: block;
+            span{
+                display: block;
+                width: 30px;
+                height: 3px;
+                border-radius: 3px;
+                background-color: transparent;
+                border: 1px solid $green;
+                position: relative;
+
+                &::after{
+                    content: '';
+                    position: absolute;
+                    width: 30px;
+                    height: 3px;
+                    border-radius: 3px;
+                    background-color: transparent;
+                    border: 1px solid $green;
+                    top: 5px;
+                    left: -1px;
+                }
+                   &::before{
+                    content: '';
+                    position: absolute;
+                    width: 30px;
+                    height: 3px;
+                    border-radius: 3px;
+                    background-color: transparent;
+                    border: 1px solid $green;
+                    // top: 0px;
+                    bottom: 5px;
+                    left: -1px;
+                }
+            }
+        }
+}

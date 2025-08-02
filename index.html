@@ -1,482 +1,483 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-  <link rel="stylesheet" href="src/css/main.css">
-</head>
-<body>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="src/css/main.css">
+  </head>
+  <body>
 
 
-  <header class="header " id="header">
-      <div class="container">
-          <nav class="navbar navbar-expand-lg ">
-            
-              <a class="navbar-brand" href="/index.html"><img class="img-logo" src="src/img/logo.png" alt=""></a>
-            
+    <header class="header " id="header">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg ">
+              
+                <a class="navbar-brand" href="/index.html"><img class="img-logo" src="src/img/logo.png" alt=""></a>
 
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/index.html">Home</a>
-                  </li>
-                   <li class="nav-item">
-                    <a class="nav-link" href="#about">About Us</a>
-                  </li>
-                   <li class="nav-item">
-                    <a class="nav-link" href="#programm">Programm</a>
-                  </li>
-                   <li class="nav-item">
-                    <a class="nav-link" href="#">Instructor</a>
-                  </li>
-                   <li class="nav-item">
-                    <a class="nav-link" href="#">Blog</a>
-                  </li>
-                   <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                  </li>
-                </ul>
-             <div class="login-register">
-              <button class="login" data-bs-toggle="modal" data-bs-target="#signUp">Sign In</button>
-              <button class="register" data-bs-toggle="modal" data-bs-target="#register">Register</button>
-             </div>
-           
-        </nav>
-      </div>
-  </header>
-
-
-<!-- Modal signUp -->
-  <div class="modal fade" id="signUp" class="signUp" tabindex="-1" aria-labelledby="signUp" aria-hidden="true">
-    <div class="modal-dialog ">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="signUp">Sign In</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form action="" id="login">
-                <div class="row g-3" >
-                  <div class="col-12">
-                    <input type="email" class="form-control" name="email" placeholder="Email" aria-label="Email" required>
-                  </div>
-                  <div class="col-12">
-                    <input type="password" class="form-control" name="password" placeholder="Password" aria-label="Password" required>
-                  </div>
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                      <a class="nav-link" aria-current="page" href="/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#programm">Programm</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Instructor</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Contact</a>
+                    </li>
+                  </ul>
+              <div class="login-register">
+                <button class="login" data-bs-toggle="modal" data-bs-target="#signUp">Sign In</button>
+                <button class="register" data-bs-toggle="modal" data-bs-target="#register">Register</button>
               </div>
-                <div class="col-12 col-md-12 btn_footer">
-                  <button type="submit" class="btn btn-primary reg-btn" >Sign In</button>
-                  <button type="submit" class="btn btn-primary reg-btn" id="clear_data_form_register">Clear</button>
+          </nav>
+
+          <div class="row justify-content-center">
+            <div class="nav nav-mobile">
+            <a class="navbar-brand" href="/index.html"><img class="img-logo" src="src/img/logo.png" alt=""></a>
+            <div class="mobile_btn">
+                  
+                  <span></span>
                 </div>
-            </form>
+          </div>
+          </div>
         </div>
-        <div class="result_signIn" id="response-msg"></div>
+    </header>
+
+
+  <!-- Modal signUp -->
+    <div class="modal fade" id="signUp" class="signUp" tabindex="-1" aria-labelledby="signUp" aria-hidden="true">
+      <div class="modal-dialog ">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="signUp">Sign In</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form action="" id="login">
+                  <div class="row g-3" >
+                    <div class="col-12">
+                      <input type="email" class="form-control" name="email" placeholder="Email" aria-label="Email" required>
+                    </div>
+                    <div class="col-12">
+                      <input type="password" class="form-control" name="password" placeholder="Password" aria-label="Password" required>
+                    </div>
+                </div>
+                  <div class="col-12 col-md-12 btn_footer">
+                    <button type="submit" class="btn btn-primary reg-btn" >Sign In</button>
+                    <button type="submit" class="btn btn-primary reg-btn" id="clear_data_form_register">Clear</button>
+                  </div>
+              </form>
+          </div>
+          <div class="result_signIn" id="response-msg"></div>
+        </div>
       </div>
     </div>
-  </div>
-<!-- Modal -->
+  <!-- Modal -->
 
-<!-- Modal register -->
-  <div class="modal fade " id="register" tabindex="-1" aria-labelledby="register" aria-hidden="true">
-    <div class="modal-dialog ">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title " id="register">Create account</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-         <form class="row g-3" id="create_account_form">
-            <div class="col-12">
-              <label for="FirstName" class="form-label">First Name</label>
-              <input type="text" class="form-control" id="FirstName" name="firstname" placeholder="First Name" required>
-            </div>
+  <!-- Modal register -->
+    <div class="modal fade " id="register" tabindex="-1" aria-labelledby="register" aria-hidden="true">
+      <div class="modal-dialog ">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title " id="register">Create account</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+          <form class="row g-3" id="create_account_form">
               <div class="col-12">
-              <label for="LastName" class="form-label">Last Name</label>
-              <input type="text" class="form-control" id="LastName" name="lastname"  placeholder="Last Name" required>
-            </div>
-            <div class="col-md-6">
-              <label for="Email" class="form-label">Email</label>
-              <input type="email" class="form-control" name="email" id="Email" placeholder="Email" required>
-            </div>
-            <div class="col-md-6">
-              <label for="Age" class="form-label">Age</label>
-              <input type="number" class="form-control" name="age" id="Age" placeholder="Age" required>
-            </div>       
-             <div class="col-md-6">
-              <label for="Phone" class="form-label">Phone</label>
-              <input type="phone" class="form-control" name="phone" id="Phone" placeholder="Phone" required>
-            </div>    
-             <div class="col-md-6">
-              <label for="Password" class="form-label">Password</label>
-              <input type="password" class="form-control" name="password" id="Password" placeholder="Password" required>
-            </div>    
-            <div class="col-12 btn_footer">
-              <button type="submit" class="btn btn-primary reg-btn">Create</button>
-              <button type="button" class="btn btn-primary reg-btn" id="clear_form_data">Clear</button>
-            </div>
-          </form>
-        </div>   
-        <div class="result_create_account" id="response-msg"></div>   
-      </div>
-    </div>
-  </div>
-<!-- Modal -->
-  
-
-  <section class="hero" id="hero">
-    <div class="container">
-      <div class="row align-items-center">
-          <div class="col-12 col-md-12 col-lg-6 hero-left">
-          <div class="hero-left-text">
-            <span class="">Make future better</span>
-            <h1>English Without Limits</h1>
-            <p>get discount for 6 months of learning. we have many courses from all professionals around the world.</p>
-          </div>
-           <div class="hero-btn">
-              <button class="try-for-free">TRY FOR FREE</button>
-              <button class="link-video" id="link-video"><i class="icon-play"><img src="src/img/play.svg" alt=""></i><a href="#">watch video</a></button>
-            </div>
-        </div>
-        <div class="col-12 col-md-12 col-lg-6 hero-right">
-          <div class="hero-right-img">
-              <img src="src/img/Group 3.png" class="animate__fadeInDown" alt="">
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div id="videoModal" class="video-modal animate__animated">
-  <div class="video-overlay " id="video-overlay">
-    <span class="close-video" id="closeVideo">&times;</span>
-    <div class="video-container">
-      <iframe
-        id="videoFrame"
-        src="https://www.youtube.com/embed/L_LUpnjgPso?enablejsapi=1"
-        frameborder="0"
-        allow="autoplay; encrypted-media"
-        allowfullscreen
-      ></iframe>
-    </div>
-  </div>
-</div>
-
-
-
-  <section class="easy" id="about">
-    <div class="container">
-      <div class="row ">
-        <div class="col-12 col-md-12 col-lg-12">
-            <h2 class="second-heading">
-              easy<span style="color: #3DC85E">english</span>
-            </h2>
-            <p class="easy-text">a 6-month programm to prepare you for better paying jobs in the united states</p>
-        
-        
-        
-            <div class="row card-row">
-              <div class="col-12 col-md-12 col-lg-3">
-                <div class="easy-icon-card">
-                  <i class="easy-icon-header"><img src="src/img/first-icon.svg" alt=""></i>
-                  <p class="easy-text-body">4 levels of becoming a confident English speaker
-                    <span   class="moretxt">revolutionary way of looking at how language is learned</span>
-                  </p>
-                  <button class="easy-btn-footer" id="toggleButton">learn more</button>
-                </div>
+                <label for="FirstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="FirstName" name="firstname" placeholder="First Name" required>
               </div>
-              <div class="col-12 col-md-12 col-lg-3">
-                 <div class="easy-icon-card">
-                  <i class="easy-icon-header"><img src="src/img/fi-br-recycle.svg" alt=""></i>
-                  <p class="easy-text-body">revolutionary way of looking at how language is learned
-                    <span   class="moretxt">revolutionary way of looking at how language is learned</span>
-                  </p>
-                  <button class="easy-btn-footer"  id="toggleButton">learn more</button>
-                </div>
+                <div class="col-12">
+                <label for="LastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="LastName" name="lastname"  placeholder="Last Name" required>
               </div>
-              <div class="col-12 col-md-12 col-lg-3">
-                 <div class="easy-icon-card">
-                  <i class="easy-icon-header"><img src="src/img/fi-br-redo-alt.svg" alt=""></i>
-                  <p class="easy-text-body">dedecated approach backed by “rince and repeat method”
-                    <span   class="moretxt">revolutionary way of looking at how language is learned</span>
-                  </p>
-                  <button class="easy-btn-footer" id="toggleButton">learn more</button>
-                </div>
+              <div class="col-md-6">
+                <label for="Email" class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" id="Email" placeholder="Email" required>
               </div>
-              <div class="col-12 col-md-12 col-lg-3">
-                 <div class="easy-icon-card">
-                  <i class="easy-icon-header"><img src="src/img/fi-br-apps.svg" alt=""></i>
-                  <p class="easy-text-body">focus on reading, writing, listening and speaking
-                    <span   class="moretxt">revolutionary way of looking at how language is learned</span>
-                  </p>
-                  <button class="easy-btn-footer" id="toggleButton">learn more</button>
-                </div>
+              <div class="col-md-6">
+                <label for="Age" class="form-label">Age</label>
+                <input type="number" class="form-control" name="age" id="Age" placeholder="Age" required>
+              </div>       
+              <div class="col-md-6">
+                <label for="Phone" class="form-label">Phone</label>
+                <input type="phone" class="form-control" name="phone" id="Phone" placeholder="Phone" required>
+              </div>    
+              <div class="col-md-6">
+                <label for="Password" class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" id="Password" placeholder="Password" required>
+              </div>    
+              <div class="col-12 btn_footer">
+                <button type="submit" class="btn btn-primary reg-btn">Create</button>
+                <button type="button" class="btn btn-primary reg-btn" id="clear_form_data">Clear</button>
               </div>
-            </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-
-
-  <section class="study" id="programm">
-    <div class="container">
-      <div class="row ">
-        <div class="col-3 col-md-12 col-lg-3">
-          <p class="study-blue-text">Study</p>
-          <h2 class="study-second-heading">Programm</h2>
-        </div>
-      </div>
-
-      <div class="row justify-content-center card-study-row">
-        <div class="col-12 col-md-12 col-sm-12 col-lg-4">
-          <div class="study-card">
-            <div class="study-card-header">
-              <img src="src/img/frau2.png" class="study-card-header-img"  alt="">
-            </div>
-            <div class="study-card-body">
-              <h3 class="study-card-heading">Beginner</h3>
-              <p class="study-card-body">
-                  for people who just start their english trip
-              </p>
-            </div>
-            <div class="study-card-footer">
-              <button class="study-card-btn">Study Now</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-4 col-md-12 col-lg-4">
-          <div class="study-card">
-            <div class="study-card-header card--gradient">
-              <img src="src/img/man1.png" class="study-card-header-img"  alt="">
-            </div>
-            <div class="study-card-body">
-              <h3 class="study-card-heading">Beginner</h3>
-              <p class="study-card-body">
-                  for people who just start their english trip
-              </p>
-            </div>
-            <div class="study-card-footer">
-              <button class="study-card-btn">Study Now</button>
-            </div>
-          </div>
-        </div>
-        <div class="col-4 col-md-12 col-lg-4">
-
-
-          <div class="study-card">
-            <div class="study-card-header card--blue">
-              <img src="src/img/frau1.png" class="study-card-header-img"  alt="">
-            </div>
-            <div class="study-card-body">
-              <h3 class="study-card-heading">Beginner</h3>
-              <p class="study-card-body">
-                  for people who just start their english trip
-              </p>
-            </div>
-            <div class="study-card-footer">
-              <button class="study-card-btn">Study Now</button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </section> 
-
-
-
-
-<section class="result">
-  <div class="container">
-    
-    <div class="row">
-         <div class="col-12 col-md-12 col-lg-6">
-          <p class="result-blue-text">Result</p>
-          <h2 class="result-second-heading">what will you get</h2>
-        </div>
-    </div>
-
-    <div class="row row-card-first justify-content-center">
-      <div class="col-6 col-md-4 col-lg-4">
-        <div class=" result-card result-card-first">
-          <div class=" result-card-first-icon">
-            01
-          </div>
-         
-            <p class="result-card-first-text">
-              level up
-              gramatical
-              of knowledge
-            </p>
-        
-        </div>
-      </div>
-      <div class="col-6 col-md-4 col-lg-4">
-        <div class="result-card result-card-second">
-          <div class=" result-card-first-icon">
-            02
-          </div>
-         
-            <p class="result-card-first-text">
-              level up
-              gramatical
-              of knowledge
-            </p>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4">
-        <div class="result-card result-card-third">
-          <div class=" result-card-first-icon">
-            03
-          </div>
-         
-            <p class="result-card-first-text">
-              level up
-              gramatical
-              of knowledge
-            </p>
-        </div>
-      </div>
-    </div>
-
-
-
-
-    
-    <div class="row row-card-second justify-content-center">
-      <div class="col-6 col-md-4 col-lg-4">
-        <div class=" result-card result-card-first">
-          <div class=" result-card-first-icon">
-            01
-          </div>
-         
-            <p class="result-card-first-text">
-              level up
-              gramatical
-              of knowledge
-            </p>
-        
-        </div>
-      </div>
-      <div class="col-6 col-md-4 col-lg-4">
-        <div class="result-card result-card-second">
-          <div class=" result-card-first-icon">
-            02
-          </div>
-         
-            <p class="result-card-first-text">
-              level up
-              gramatical
-              of knowledge
-            </p>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4">
-        <div class="result-card result-card-third">
-          <div class=" result-card-first-icon">
-            03
-          </div>
-         
-            <p class="result-card-first-text">
-              level up
-              gramatical
-              of knowledge
-            </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-
-
-
-
-
-<section class="online">
-  <div class="container">
-    <div class="row online-row">
-      <div class="col-12 col-md-12 col-lg-6 online-text-left">
-          <h5>download mobile app</h5>
-          <h2>online education</h2>
-          <p> <strong>MOBILE APP</strong>   will help make learning easier and more effective. download the app for studying the English course. the app has the ability to hold online meetings, has additional bonus lectures, and your homework will be checked in the application!</p>
-      
-          <div class="app-btn">
-            <img src="src/img/AppStore.png" alt="">
-            <img src="src/img/GooglePlay.png" alt="">
-          </div>  
-      </div>
-      <div class="col-12 col-md-12 col-lg-6 online-text-right">
-          <img src="src/img/app.png" alt="app image">
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section class="contactus">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-12 col-lg-12">
-        <div class="create-student-form">
-
-            <h2>easy<span style="color: #3DC85E;">english</span></h2>
-            <p>If you got any questions or need a consultation please send us a message</p>
-
-
-            <form id="studentForm" class="online-form">
-             <div class="row g-3">
-              <div class="col">
-                  <input required type="text" class="online-form-input" name="fullname" placeholder="First name" aria-label="Full Name">
-                </div>
-              <div class="col">
-                  <input required type="email" class="online-form-input" name="email" placeholder="E-mail" aria-label="E-mail">
-              </div>
-             </div>
-            
-             <div class="row">
-              <div class="col">
-                <textarea required name="message" class="online-form-textarea" placeholder="Message..." rows="3" id=""></textarea>
-              </div>
-             </div>
-            
-
-              <button type="submit" class="btn online-send-form">send now</button>
-
-               
             </form>
-
-            <p id="response" class="response-msg"></p>
+          </div>   
+          <div class="result_create_account" id="response-msg"></div>   
         </div>
       </div>
     </div>
+  <!-- Modal -->
+    
+
+    <section class="hero" id="hero">
+      <div class="container">
+        <div class="row align-items-center">
+            <div class="col-12 col-md-12 col-lg-6 hero-left">
+            <div class="hero-left-text">
+              <span class="">Make future better</span>
+              <h1>English Without Limits</h1>
+              <p>get discount for 6 months of learning. we have many courses from all professionals around the world.</p>
+            </div>
+            <div class="hero-btn">
+                <button class="try-for-free">TRY FOR FREE</button>
+                <button class="link-video" id="link-video"><i class="icon-play"><img src="src/img/play.svg" alt=""></i><a href="#">watch video</a></button>
+              </div>
+          </div>
+          <div class="col-12 col-md-12 col-lg-6 hero-right">
+            <div class="hero-right-img">
+                <img src="src/img/Group 3.png" class="animate__fadeInDown" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="videoModal" class="video-modal animate__animated">
+    <div class="video-overlay " id="video-overlay">
+      <span class="close-video" id="closeVideo">&times;</span>
+      <div class="video-container">
+        <iframe
+          id="videoFrame"
+          src="https://www.youtube.com/embed/L_LUpnjgPso?enablejsapi=1"
+          frameborder="0"
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
   </div>
-</section>
- 
 
 
 
+    <section class="easy" id="about">
+      <div class="container">
+        <div class="row ">
+          <div class="col-12 col-md-12 col-lg-12">
+              <h2 class="second-heading">
+                easy<span style="color: #3DC85E">english</span>
+              </h2>
+              <p class="easy-text">a 6-month programm to prepare you for better paying jobs in the united states</p>
+          
+          
+          
+              <div class="row card-row">
+                <div class="col-12 col-md-12 col-lg-3">
+                  <div class="easy-icon-card">
+                    <i class="easy-icon-header"><img src="src/img/first-icon.svg" alt=""></i>
+                    <p class="easy-text-body">4 levels of becoming a confident English speaker
+                      <span   class="moretxt">revolutionary way of looking at how language is learned</span>
+                    </p>
+                    <button class="easy-btn-footer" id="toggleButton">learn more</button>
+                  </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-3">
+                  <div class="easy-icon-card">
+                    <i class="easy-icon-header"><img src="src/img/fi-br-recycle.svg" alt=""></i>
+                    <p class="easy-text-body">revolutionary way of looking at how language is learned
+                      <span   class="moretxt">revolutionary way of looking at how language is learned</span>
+                    </p>
+                    <button class="easy-btn-footer"  id="toggleButton">learn more</button>
+                  </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-3">
+                  <div class="easy-icon-card">
+                    <i class="easy-icon-header"><img src="src/img/fi-br-redo-alt.svg" alt=""></i>
+                    <p class="easy-text-body">dedecated approach backed by “rince and repeat method”
+                      <span   class="moretxt">revolutionary way of looking at how language is learned</span>
+                    </p>
+                    <button class="easy-btn-footer" id="toggleButton">learn more</button>
+                  </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-3">
+                  <div class="easy-icon-card">
+                    <i class="easy-icon-header"><img src="src/img/fi-br-apps.svg" alt=""></i>
+                    <p class="easy-text-body">focus on reading, writing, listening and speaking
+                      <span   class="moretxt">revolutionary way of looking at how language is learned</span>
+                    </p>
+                    <button class="easy-btn-footer" id="toggleButton">learn more</button>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+
+    <section class="study" id="programm">
+      <div class="container">
+        <div class="row ">
+          <div class="col-3 col-md-12 col-lg-3">
+            <p class="study-blue-text">Study</p>
+            <h2 class="study-second-heading">Programm</h2>
+          </div>
+        </div>
+
+        <div class="row justify-content-center card-study-row">
+          <div class="col-12 col-md-12 col-sm-12 col-lg-4">
+            <div class="study-card">
+              <div class="study-card-header">
+                <img src="src/img/frau2.png" class="study-card-header-img"  alt="">
+              </div>
+              <div class="study-card-body">
+                <h3 class="study-card-heading">Beginner</h3>
+                <p class="study-card-body">
+                    for people who just start their english trip
+                </p>
+              </div>
+              <div class="study-card-footer">
+                <button class="study-card-btn">Study Now</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4 col-md-12 col-lg-4">
+            <div class="study-card">
+              <div class="study-card-header card--gradient">
+                <img src="src/img/man1.png" class="study-card-header-img"  alt="">
+              </div>
+              <div class="study-card-body">
+                <h3 class="study-card-heading">C1</h3>
+                <p class="study-card-body">
+                    for people who just start their english trip
+                </p>
+              </div>
+              <div class="study-card-footer">
+                <button class="study-card-btn">Study Now</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-4 col-md-12 col-lg-4">
+
+
+            <div class="study-card">
+              <div class="study-card-header card--blue">
+                <img src="src/img/frau1.png" class="study-card-header-img"  alt="">
+              </div>
+              <div class="study-card-body">
+                <h3 class="study-card-heading">Intermediate</h3>
+                <p class="study-card-body">
+                    for people who just start their english trip
+                </p>
+              </div>
+              <div class="study-card-footer">
+                <button class="study-card-btn">Study Now</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section> 
+
+
+
+
+  <section class="result">
+    <div class="container">
+      
+      <div class="row">
+          <div class="col-12 col-md-12 col-lg-6">
+            <p class="result-blue-text">Result</p>
+            <h2 class="result-second-heading">what will you get</h2>
+          </div>
+      </div>
+
+      <div class="row row-card-first justify-content-center">
+        <div class="col-6 col-md-4 col-lg-4">
+          <div class=" result-card result-card-first">
+            <div class=" result-card-first-icon">
+              01
+            </div>
+          
+              <p class="result-card-first-text">
+                level up
+                gramatical
+                of knowledge
+              </p>
+          
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-4">
+          <div class="result-card result-card-second">
+            <div class=" result-card-first-icon">
+              02
+            </div>
+          
+              <p class="result-card-first-text">
+                skills improvement 
+                conversational
+                english
+              </p>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="result-card result-card-third">
+            <div class=" result-card-first-icon">
+              03
+            </div>
+          
+              <p class="result-card-first-text">
+                enrichment 
+                vocabruary
+              </p>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      
+      <div class="row row-card-second justify-content-center">
+        <div class="col-6 col-md-4 col-lg-4">
+          <div class=" result-card result-card-first">
+            <div class=" result-card-first-icon">
+              01
+            </div>
+          
+              <p class="result-card-first-text">
+                plenty of free educational literature
+              </p>
+          
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-4">
+          <div class="result-card result-card-second">
+            <div class=" result-card-first-icon">
+              02
+            </div>
+          
+              <p class="result-card-first-text">
+               escort to period of the whole course
+              </p>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="result-card result-card-third">
+            <div class=" result-card-first-icon">
+              03
+            </div>
+          
+              <p class="result-card-first-text">
+                visit english speaking club & movie night
+              </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+  <section class="online">
+    <div class="container">
+      <div class="row online-row">
+        <div class="col-12 col-md-12 col-lg-6 online-text-left">
+            <h5>download mobile app</h5>
+            <h2>online education</h2>
+            <p> <strong>MOBILE APP</strong>   will help make learning easier and more effective. download the app for studying the English course. the app has the ability to hold online meetings, has additional bonus lectures, and your homework will be checked in the application!</p>
+        
+            <div class="app-btn">
+              <a href="https://www.apple.com/app-store/"><img src="src/img/AppStore.png" alt=""></a>
+              <a href="https://play.google.com/store/games"><img src="src/img/GooglePlay.png" alt=""></a>
+            </div>  
+        </div>
+        <div class="col-12 col-md-12 col-lg-6 online-text-right">
+            <img src="src/img/app.png" alt="app image">
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="contactus">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-12 col-lg-12">
+          <div class="create-student-form">
+
+              <h2>easy<span style="color: #3DC85E;">english</span></h2>
+              <p>If you got any questions or need a consultation please send us a message</p>
+
+
+              <form id="studentForm" class="online-form">
+              <div class="row g-3">
+                <div class="col">
+                    <input required type="text" class="online-form-input" name="fullname" placeholder="First name" aria-label="Full Name">
+                  </div>
+                <div class="col">
+                    <input required type="email" class="online-form-input" name="email" placeholder="E-mail" aria-label="E-mail">
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col">
+                  <textarea required name="message" class="online-form-textarea" placeholder="Message..." rows="3" id=""></textarea>
+                </div>
+              </div>
+              
+
+                <button type="submit" class="btn online-send-form">send now</button>
+
+                
+              </form>
+
+              <p id="response" class="response-msg"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   
 
 
 
+    
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.7.1.js"  integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="  crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-<script src="src/js/splide.js" type="text/javascript"></script>
-<script src="src/js/main.js" type="text/javascript"></script>
 
 
-</body>
-</html>
+
+  <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"  integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="  crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+  <script src="src/js/splide.js" type="text/javascript"></script>
+  <script src="src/js/main.js" type="text/javascript"></script>
+
+
+  </body>
+  </html>
