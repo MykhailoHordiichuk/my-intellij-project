@@ -256,3 +256,25 @@ document.querySelectorAll(".toggleButton").forEach((button) => {
     }
   });
 });
+
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    const closeMenu = document.getElementById('close');
+
+
+    menuToggle.addEventListener('click', function () {
+      mobileNav.classList.remove('close-menu');
+      mobileNav.classList.toggle('show-menu');
+    });
+
+
+    closeMenu.addEventListener('click', function(){
+        mobileNav.classList.remove('show-menu');
+        mobileNav.classList.toggle('close-menu');
+     
+    });
+  });
+
