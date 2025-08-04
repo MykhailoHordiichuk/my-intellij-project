@@ -11,7 +11,10 @@
 html {
      scroll-behavior: smooth;
 }
-
+a{
+    color: $black;
+    text-decoration: none;
+}
 
 .container{
     max-width: 1440px;
@@ -153,10 +156,33 @@ html {
 }
 
 .login{
-    color: $green;
+    
+    a{
+        color: $green;
+        transition: all .30s ease;
+        position: relative;
+        &::after{
+            position: absolute;
+            content: '';
+            width: 0%;
+            height: 2px;
+            background-color: $green;
+            left: 0;
+            bottom: -3px;
+            // top: 10px;
+            transition: all .33s ease;
+        }
+    }
 
     &:hover{
-        color: $black;
+        a{
+            color: $black;
+
+            &::after{
+                width: 100%;
+                background-color: $black;
+            }
+        }
     }
 }
 
