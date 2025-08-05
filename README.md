@@ -4,8 +4,6 @@
 **EasyEng** — is a Spring Boot REST API for an online language school. Allows managing users, courses, teachers, content pages, and incoming contact messages. The service is deployed on Render.
 
 > 🔗 **Live Backend**: https://easyeng-ccwf.onrender.com  
-> 🌐 **Frontend (in development)**: https://easyeng.netlify.app  
-> 🎨 **Figma (design)**: [Design](https://www.figma.com/design/WwmXdOPnFgiTmbedoUQu9M/Untitled?node-id=0-1&m=dev&t=CSekH0d9fIuvgupt-1)  
 > 🧪 **Swagger UI**: https://easyeng-ccwf.onrender.com/swagger-ui/index.html  
 
 ---
@@ -184,24 +182,17 @@ https://easyeng-ccwf.onrender.com/swagger-ui/index.html
 
 ---
 
-## 🧩 TODO / TODO / Ideas
+## 🧩 Planned Improvements
 
-- [ ] Replace Basic Auth with JWT
-- [ ] Implement roles: ADMIN / USER / TEACHER
-- [ ] Add validation for DTOs and responses
-- [ ] Integrate email notifications
-- [ ] Write unit tests for controllers
-
----
-
-## 📃 License
-
-Free to use for educational and non-commercial purposes.
+- Refactor business logic into a dedicated Service Layer
+- Replace Basic Auth with JWT authentication
+- Implement role-based access control (ADMIN / USER / TEACHER)
+- Add validation for DTOs and standardized error responses
+- Integrate email notifications for user actions
+- Add unit and integration tests for controllers
 
 ---
 
 ## 👨‍💻 Authors
 
-- Mykhailo Hordiichuk — Backend Developer (https://github.com/MykhailoHordiichuk/my-intellij-project.git)   
-- Hordiichuk Anna — UI/UX Design  
-- Karaman Kostiantyn — Frontend Developer
+- Mykhailo Hordiichuk — Backend Developer (https://github.com/MykhailoHordiichuk/my-intellij-project.git)
