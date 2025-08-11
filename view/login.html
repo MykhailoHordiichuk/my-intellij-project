@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="../src/css/main.css">
+    <link rel="stylesheet" href="../src/css/signup.css">
   </head>
   <body>
 
@@ -38,7 +39,6 @@
                     </li>
                   </ul>
               <div class="login-register">
-                <button class="login" data-bs-toggle="modal" data-bs-target="#signUp">Sign In</button>
                 <button class="register" data-bs-toggle="modal" data-bs-target="#register">Register</button>
               </div>
           </nav>
@@ -56,21 +56,44 @@
     </header>
 
 
-          <!-- <form action="" id="login">
-                <div class="row">
-                  <div class="col">
-                    <input type="email" class="form-control" name="email" placeholder="Email" aria-label="Email" required>
-                  </div>
-                  <div class="col">
-                    <input type="password" class="form-control" name="password" placeholder="Password" aria-label="Password" required>
-                  </div>
+      
+
+
+        <section class="login_form_page">
+          <div class="container">
+
+              <div class="col-12 col-md-12 col-lg-4 login_form_page_left_column">
+                  <h2> Welcome to a World of New Opportunities! </h2>
+                  <p>Registration is your first step toward confident English.</p>
+
+                  <img  class="group_mob" src="../src/img/screen_phone.png" alt="screen_phone.png">
               </div>
-                <div class="col-12">
-                  <button type="submit" class="btn btn-primary reg-btn">Sign In</button>
+
+              <div class="col-12 col-md-12 col-lg-8 login_form_column">
+
+                <div class="row row_login">
+                  <div class="col-12 col-md-12 col-lg-12">
+                    <h3>Create account</h3>
+                    <p>For Students, Teachers & Gests</p>
+                  </div>
                 </div>
-            </form>
-     
-        <div class="result_signIn" id="response-msg"></div> -->
+                    <form action="" class="login" id="login">
+                        <div class="row">
+                          <div class="col">
+                            <input type="email" class="form-control" name="email" placeholder="Email" aria-label="Email" required>
+                          </div>
+                          <div class="col">
+                            <input type="password" class="form-control" name="password" placeholder="Password" aria-label="Password" required>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <button type="submit" class="btn btn-primary reg-btn">Sign In</button>
+                        </div>
+                    </form>
+                    <div class="result_signIn" id="response-msg"></div>
+              </div>
+          </div>
+        </section>
 
 
 
