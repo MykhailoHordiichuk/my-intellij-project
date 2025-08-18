@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
@@ -45,5 +45,13 @@ public class User {
     @Size(max = 20)
     private String phoneNumber;
 
-    private LocalDate registeredAt;
+    @Column(nullable = false)
+    private LocalDateTime registeredAt;
+
+    @PrePersist
+    public void onCreate() {
+        if (registeredAt == null) {
+            registeredAt = LocalDateTime.now();
+        }
+    }
 }
