@@ -33,5 +33,4 @@ public class UserCreateDTO {
     @Size(max = 20)
     private String phoneNumber;
 
-    private LocalDate registeredAt;
 }

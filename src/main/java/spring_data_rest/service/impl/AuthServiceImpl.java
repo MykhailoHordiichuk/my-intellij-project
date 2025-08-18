@@ -40,7 +40,6 @@ public class AuthServiceImpl implements AuthService {
         u.setLastName(dto.getLastName());
         u.setAge(dto.getAge());
         u.setPhoneNumber(dto.getPhoneNumber());
-        u.setRegisteredAt(dto.getRegisteredAt());
 
         users.save(u);
         log.info("User registered successfully with id={}", u.getId());

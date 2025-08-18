@@ -28,5 +28,4 @@ public class UserUpdateDTO {
     @Size(max = 20)
     private String phoneNumber;
 
-    private LocalDate registeredAt;
 }
