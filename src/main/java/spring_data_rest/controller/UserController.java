@@ -1,138 +1,94 @@
 package spring_data_rest.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
-import spring_data_rest.dao.UserRepository;
-import spring_data_rest.dto.UserLoginDTO;
-import spring_data_rest.dto.UserRegisterDTO;
+import spring_data_rest.dto.user.UserCreateDTO;
+import spring_data_rest.dto.user.UserDTO;
+import spring_data_rest.dto.user.UserUpdateDTO;
 import spring_data_rest.entity.User;
+import spring_data_rest.service.UserService;
 
-import java.time.LocalDate;
-import java.util.*;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserService users;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    // Register
-    @PostMapping("/register")
-    public ResponseEntity<Map<String, String>> register(@RequestBody UserRegisterDTO request) {
-        Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
-        if (existingUser.isPresent()) {
-            return ResponseEntity.badRequest().body(Map.of(
-                    "error", "User with email already exists",
-                    "email", request.getEmail()
-            ));
-        }
-
-        User user = new User();
-        user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-        user.setAge(request.getAge());
-        user.setPhoneNumber(request.getPhoneNumber());
-        user.setRegisteredAt(LocalDate.now());
-        user.setEnabled(true);
-        user.setRole("USER");
-
-        userRepository.save(user);
-
-        //примечание в return password - user.getPassword() возвращается "хэшированым" в JSON
-        return ResponseEntity.ok(Map.of(
-                "message", "User registered successfully",
-                "email", user.getEmail(),
-                "password", user.getPassword(),
-                "firstName", user.getFirstName(),
-                "lastName", user.getLastName(),
-                "age", String.valueOf(user.getAge()),
-                "phoneNumber", user.getPhoneNumber()
-        ));
+    public UserController(UserService users) {
+        this.users = users;
     }
 
-    // Login
-    @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody UserLoginDTO request) {
-        Optional<User> userOpt = userRepository.findByEmail(request.getEmail());
-
-        if (userOpt.isEmpty()) {
-            return ResponseEntity.status(404).body(Map.of(
-                    "error", "User not found",
-                    "email", request.getEmail()
-            ));
-        }
-
-        User user = userOpt.get();
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            return ResponseEntity.status(401).body(Map.of(
-                    "error", "Invalid password",
-                    "email", request.getEmail()
-            ));
-        }
-        //пароль так же возвращается "хэшированым"
-        return ResponseEntity.ok(Map.of(
-                "message", "Login successful",
-                "email", user.getEmail(),
-                "password", user.getPassword(),
-                "firstName", user.getFirstName(),
-                "lastName", user.getLastName(),
-                "age", String.valueOf(user.getAge()),
-                "phoneNumber", user.getPhoneNumber()
-        ));
+    // CREATE
+    @PostMapping
+    public UserDTO create(@Valid @RequestBody UserCreateDTO dto) {
+        User toSave = fromCreateDto(dto);
+        User saved = users.create(toSave);
+        return toDto(saved);
     }
 
-    // Get all users
-    @GetMapping
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    // Get user by ID
+    // READ ONE
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable int id) {
-        return userRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public UserDTO get(@PathVariable Integer id) {
+        return toDto(users.get(id));
     }
 
-    // Update user
+    // READ ALL
+    @GetMapping
+    public List<UserDTO> getAll() {
+        return users.getAll().stream().map(this::toDto).collect(Collectors.toList());
+    }
+
+    // UPDATE (частичное — применяем только не-null поля из DTO)
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User updated) {
-        return userRepository.findById(id).map(user -> {
-            user.setFirstName(updated.getFirstName());
-            user.setLastName(updated.getLastName());
-            user.setAge(updated.getAge());
-            user.setPhoneNumber(updated.getPhoneNumber());
-            user.setRegisteredAt(updated.getRegisteredAt());
-            user.setRole(updated.getRole());
-            user.setEnabled(updated.isEnabled());
-            return ResponseEntity.ok(userRepository.save(user));
-        }).orElse(ResponseEntity.notFound().build());
+    public UserDTO update(@PathVariable Integer id, @Valid @RequestBody UserUpdateDTO dto) {
+        User current = users.get(id);
+        applyUpdate(current, dto);
+        User saved = users.update(id, current);
+        return toDto(saved);
     }
 
-    // Delete user
+    // DELETE
     @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, String>> deleteUser(@PathVariable int id) {
-        Optional<User> userOpt = userRepository.findById(id);
-        if (userOpt.isEmpty()) {
-            return ResponseEntity.status(404).body(Map.of(
-                    "error", "User not found",
-                    "id", String.valueOf(id)
-            ));
-        }
-        String deletedEmail = userOpt.get().getEmail();
-        userRepository.deleteById(id);
-        return ResponseEntity.ok(Map.of(
-                "message", "User deleted",
-                "email", deletedEmail
-        ));
+    public void delete(@PathVariable Integer id) {
+        users.delete(id);
+    }
+
+    /* ---------- mapping helpers ---------- */
+
+    private UserDTO toDto(User u) {
+        UserDTO dto = new UserDTO();
+        dto.setId(u.getId());
+        dto.setEmail(u.getEmail());
+        dto.setFirstName(u.getFirstName());
+        dto.setLastName(u.getLastName());
+        dto.setAge(u.getAge());
+        dto.setPhoneNumber(u.getPhoneNumber());
+        dto.setRegisteredAt(u.getRegisteredAt());
+        return dto;
+    }
+
+    private User fromCreateDto(UserCreateDTO dto) {
+        User u = new User();
+        u.setEmail(dto.getEmail());
+        u.setPassword(dto.getPassword()); // если шифруешь в сервисе — оставь так; если тут — зашифруй здесь
+        u.setFirstName(dto.getFirstName());
+        u.setLastName(dto.getLastName());
+        u.setAge(dto.getAge());
+        u.setPhoneNumber(dto.getPhoneNumber());
+        u.setRegisteredAt(dto.getRegisteredAt());
+        return u;
+    }
+
+    private void applyUpdate(User u, UserUpdateDTO dto) {
+        if (dto.getEmail() != null)       u.setEmail(dto.getEmail());
+        if (dto.getFirstName() != null)   u.setFirstName(dto.getFirstName());
+        if (dto.getLastName() != null)    u.setLastName(dto.getLastName());
+        if (dto.getAge() != null)         u.setAge(dto.getAge());
+        if (dto.getPhoneNumber() != null) u.setPhoneNumber(dto.getPhoneNumber());
+        if (dto.getRegisteredAt() != null)u.setRegisteredAt(dto.getRegisteredAt());
     }
 }

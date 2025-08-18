@@ -1,63 +1,75 @@
 package spring_data_rest.controller;
 
-import spring_data_rest.dao.PageContentRepository;
+import spring_data_rest.dto.page.*;
 import spring_data_rest.entity.PageContent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import spring_data_rest.service.PageContentService;
+
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/pages")
 public class PageContentController {
-    private static final Logger logger = LoggerFactory.getLogger(PageContentController.class);
 
-    @Autowired
-    private PageContentRepository repository;
+    private final PageContentService pages;
 
-    @GetMapping
-    public List<PageContent> getAllPages() {
-        logger.info("GET /api/pages - getAllPages called");
-        List<PageContent> pages = repository.findAll();
-        logger.debug("Found {} page(s)", pages.size());
-        return pages;
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<PageContent> getPage(@PathVariable int id) {
-        logger.info("GET /api/pages/{} - getPage called", id);
-        return repository.findById(id)
-                .map(page -> {
-                    logger.debug("Page found: {}", page);
-                    return ResponseEntity.ok(page);
-                })
-                .orElseGet(() -> {
-                    logger.warn("Page with ID {} not found", id);
-                    return ResponseEntity.notFound().build();
-                });
+    public PageContentController(PageContentService pages) {
+        this.pages = pages;
     }
 
     @PostMapping
-    public PageContent createPage(@RequestBody PageContent page) {
-        logger.info("POST /api/pages - createPage called");
-        logger.debug("Page to create: {}", page);
-        PageContent saved = repository.save(page);
-        logger.info("Page created with ID {}", saved.getId());
-        return saved;
+    public PageContentDTO create(@Valid @RequestBody PageContentCreateDTO dto) {
+        PageContent saved = pages.create(fromCreate(dto));
+        return toDto(saved);
+    }
+
+    @GetMapping("/{id}")
+    public PageContentDTO get(@PathVariable Integer id) {
+        return toDto(pages.get(id));
+    }
+
+    @GetMapping
+    public List<PageContentDTO> getAll() {
+        return pages.getAll().stream().map(this::toDto).collect(Collectors.toList());
+    }
+
+    @PutMapping("/{id}")
+    public PageContentDTO update(@PathVariable Integer id, @Valid @RequestBody PageContentUpdateDTO dto) {
+        PageContent current = pages.get(id);
+        applyUpdate(current, dto);
+        PageContent saved = pages.update(id, current);
+        return toDto(saved);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePage(@PathVariable int id) {
-        logger.info("DELETE /api/pages/{} - deletePage called", id);
-        if (!repository.existsById(id)) {
-            logger.warn("Page with ID {} not found for deletion", id);
-            return ResponseEntity.notFound().build();
-        }
-        repository.deleteById(id);
-        logger.info("Page with ID {} deleted", id);
-        return ResponseEntity.noContent().build();
+    public void delete(@PathVariable Integer id) {
+        pages.delete(id);
+    }
+
+    /* --- mapping --- */
+    private PageContentDTO toDto(PageContent e) {
+        return new PageContentDTO(
+                e.getId(),
+                e.getPageName(),
+                e.getTitle(),
+                e.getContent()
+        );
+    }
+
+    private PageContent fromCreate(PageContentCreateDTO dto) {
+        PageContent e = new PageContent();
+        e.setPageName(dto.getPageName());
+        e.setTitle(dto.getTitle());
+        e.setContent(dto.getContent());
+        return e;
+    }
+
+    private void applyUpdate(PageContent e, PageContentUpdateDTO dto) {
+        if (dto.getPageName() != null) e.setPageName(dto.getPageName());
+        if (dto.getTitle() != null)    e.setTitle(dto.getTitle());
+        if (dto.getContent() != null)  e.setContent(dto.getContent());
     }
 }

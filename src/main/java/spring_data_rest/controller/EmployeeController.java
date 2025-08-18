@@ -1,97 +1,119 @@
 package spring_data_rest.controller;
 
-import spring_data_rest.dao.EmployeeRepository;
+import spring_data_rest.dto.employee.*;
 import spring_data_rest.entity.Employee;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import spring_data_rest.service.EmployeeService;
+import spring_data_rest.entity.Course;
+import spring_data_rest.dto.course.CourseDTO;
+
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
 
-    private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
+    private final EmployeeService employees;
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
-
-    // Получить всех сотрудников
-    @GetMapping
-    public List<Employee> getAllEmployees() {
-        logger.info("GET /api/employees - getAllEmployees called");
-        List<Employee> employees = employeeRepository.findAll();
-        logger.debug("Found {} employees", employees.size());
-        return employees;
+    public EmployeeController(EmployeeService employees) {
+        this.employees = employees;
     }
 
-    // Получить сотрудника по ID
+    @PostMapping
+    public EmployeeDTO create(@Valid @RequestBody EmployeeCreateDTO dto) {
+        Employee saved = employees.create(fromCreate(dto));
+        return toDto(saved);
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable int id) {
-        logger.info("GET /api/employees/{} - getEmployeeById called", id);
-        Optional<Employee> empOpt = employeeRepository.findById(id);
-        if (empOpt.isPresent()) {
-            logger.debug("Employee found: {}", empOpt.get());
-            return ResponseEntity.ok(empOpt.get());
-        } else {
-            logger.warn("Employee with ID {} not found", id);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    public EmployeeDTO get(@PathVariable Integer id) {
+        return toDto(employees.get(id));
     }
 
-    // Добавить нового сотрудника
-    @PostMapping(consumes = "application/json")
-    public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
-        logger.info("POST /api/employees - addEmployee called");
-        logger.debug("Employee to save: {}", employee);
-        Employee saved = employeeRepository.save(employee);
-        logger.info("Employee saved with ID {}", saved.getId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    @GetMapping
+    public List<EmployeeDTO> getAll() {
+        return employees.getAll().stream().map(this::toDto).collect(Collectors.toList());
     }
 
-    // Обновить данные сотрудника по ID
-    @PutMapping(value = "/{id}", consumes = "application/json")
-    public ResponseEntity<?> updateEmployee(@PathVariable int id, @RequestBody Employee updatedEmployee) {
-        logger.info("PUT /api/employees/{} - updateEmployee called", id);
-        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        if (optionalEmployee.isEmpty()) {
-            logger.warn("Employee with ID {} not found for update", id);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee with ID = " + id + " not found");
-        }
-
-        Employee employee = optionalEmployee.get();
-        logger.debug("Existing employee before update: {}", employee);
-
-        employee.setFirstName(updatedEmployee.getFirstName());
-        employee.setLastName(updatedEmployee.getLastName());
-        employee.setEmail(updatedEmployee.getEmail());
-        employee.setLanguage(updatedEmployee.getLanguage());
-        employee.setLevel(updatedEmployee.getLevel());
-        employee.setExperienceYears(updatedEmployee.getExperienceYears());
-        employee.setHourlyRate(updatedEmployee.getHourlyRate());
-
-        Employee saved = employeeRepository.save(employee);
-        logger.info("Employee with ID {} updated", saved.getId());
-        return ResponseEntity.ok(saved);
+    @PutMapping("/{id}")
+    public EmployeeDTO update(@PathVariable Integer id, @Valid @RequestBody EmployeeUpdateDTO dto) {
+        Employee current = employees.get(id);
+        applyUpdate(current, dto);
+        Employee saved = employees.update(id, current);
+        return toDto(saved);
     }
 
-    // Удалить сотрудника по ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable int id) {
-        logger.info("DELETE /api/employees/{} - deleteEmployee called", id);
-        if (!employeeRepository.existsById(id)) {
-            logger.warn("Employee with ID {} not found for deletion", id);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Employee with ID = " + id + " not found");
-        }
+    public void delete(@PathVariable Integer id) {
+        employees.delete(id);
+    }
 
-        employeeRepository.deleteById(id);
-        logger.info("Employee with ID {} deleted", id);
-        return ResponseEntity.ok("Employee with ID = " + id + " was deleted");
+    /* ---------- mapping ---------- */
+
+    private EmployeeDTO toDto(Employee e) {
+        return new EmployeeDTO(
+                e.getId(),
+                e.getFirstName(),
+                e.getLastName(),
+                e.getEmail(),
+                e.getLanguage(),
+                e.getLevel(),
+                e.getExperienceYears(),
+                e.getHourlyRate()
+        );
+    }
+
+    private Employee fromCreate(EmployeeCreateDTO dto) {
+        Employee e = new Employee();
+        e.setFirstName(dto.getFirstName());
+        e.setLastName(dto.getLastName());
+        e.setEmail(dto.getEmail());
+        e.setLanguage(dto.getLanguage());
+        e.setLevel(dto.getLevel());
+        if (dto.getExperienceYears() != null) e.setExperienceYears(dto.getExperienceYears());
+        if (dto.getHourlyRate() != null) e.setHourlyRate(dto.getHourlyRate());
+        return e;
+    }
+
+    private void applyUpdate(Employee e, EmployeeUpdateDTO dto) {
+        if (dto.getFirstName() != null)      e.setFirstName(dto.getFirstName());
+        if (dto.getLastName() != null)       e.setLastName(dto.getLastName());
+        if (dto.getEmail() != null)          e.setEmail(dto.getEmail());
+        if (dto.getLanguage() != null)       e.setLanguage(dto.getLanguage());
+        if (dto.getLevel() != null)          e.setLevel(dto.getLevel());
+        if (dto.getExperienceYears() != null)e.setExperienceYears(dto.getExperienceYears());
+        if (dto.getHourlyRate() != null)     e.setHourlyRate(dto.getHourlyRate());
+    }
+    // NEW: get courses of employee
+    @GetMapping("/{id}/courses")
+    public List<CourseDTO> getCourses(@PathVariable Integer id) {
+        return employees.getCourses(id).stream().map(this::toCourseDto).toList();
+    }
+
+    // NEW: assign course to employee
+    @PostMapping("/{id}/courses/{courseId}")
+    public void assignCourse(@PathVariable Integer id, @PathVariable Integer courseId) {
+        employees.assignCourse(id, courseId);
+    }
+
+    // NEW: remove course from employee
+    @DeleteMapping("/{id}/courses/{courseId}")
+    public void removeCourse(@PathVariable Integer id, @PathVariable Integer courseId) {
+        employees.removeCourse(id, courseId);
+    }
+
+    private CourseDTO toCourseDto(Course c) {
+        CourseDTO dto = new CourseDTO();
+        dto.setId(c.getId());
+        dto.setLanguage(c.getLanguage());
+        dto.setLevel(c.getLevel());
+        dto.setDescription(c.getDescription());
+        dto.setPrice(c.getPrice());
+        dto.setDurationWeeks(c.getDurationWeeks());
+        dto.setTeacherId(c.getTeacher() != null ? c.getTeacher().getId() : null);
+        return dto;
     }
 }

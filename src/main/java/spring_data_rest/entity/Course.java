@@ -1,41 +1,38 @@
 package spring_data_rest.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.*;
+import lombok.*;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "courses")
+@Data @NoArgsConstructor @AllArgsConstructor
 public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "language")
+    @Column(nullable = false, length = 50)
+    @NotBlank @Size(max = 50)
     private String language;
 
-    @Column(name = "level")
+    @Column(length = 20)
+    @Size(max = 20)
     private String level;
 
-    @Column(name = "description")
+    @Column(length = 2000)
+    @Size(max = 2000)
     private String description;
 
-    @Column(name = "price")
+    @DecimalMin("0.0")
     private double price;
 
-    @Column(name = "durationWeeks")
+    @Min(0)
     private int durationWeeks;
 
-    @JsonManagedReference // teacher relation
-    @ManyToOne
-    @JoinColumn(name = "teacher_id")
+    // many courses → one teacher (Employee)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "teacher_id") // nullable: курс может быть без преподавателя
     private Employee teacher;
-
 }

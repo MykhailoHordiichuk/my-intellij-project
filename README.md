@@ -1,7 +1,8 @@
+# 🏫 EasyEng – Online Language School API
 
-# 🏫 EasyEng – Online Language School API (EN)
-
-**EasyEng** — is a Spring Boot REST API for an online language school. Allows managing users, courses, teachers, content pages, and incoming contact messages. The service is deployed on Render.
+**EasyEng** is a Spring Boot REST API for an online language school.  
+It manages users, courses, teachers, static pages, and contact messages.  
+The service is deployed on **Render** with a PostgreSQL database.  
 
 > 🔗 **Live Backend**: https://easyeng-ccwf.onrender.com  
 > 🧪 **Swagger UI**: https://easyeng-ccwf.onrender.com/swagger-ui/index.html  
@@ -10,87 +11,69 @@
 
 ## ✅ Features
 
-- 🔐 User registration and login
-- 📘 CRUD for courses and teachers
-- 💬 Sending messages via contact form
-- 🧾 Managing static content (pages)
-- ⚙️ Swagger UI and Actuator endpoints
-- 🔐 Basic Auth + CORS
-- 🔄 Passwords are hashed using BCrypt
-- 📦 Ready for deployment (Render Docker build)
+- 🔐 User registration and login  
+- 📘 CRUD for courses and teachers  
+- 💬 Contact form messages (send + admin view)  
+- 📄 Manage static page content  
+- ⚙️ Swagger UI + Actuator monitoring  
+- 🔄 Password hashing with BCrypt  
+- 🧾 DTO layer with validation  
+- 📝 Centralized business logic in Service Layer  
+- 📦 Ready for deployment (Render + PostgreSQL)  
 
 ---
 
 ## 🛡️ Security
 
-- `/api/users/**` — registration and login (open access)
-- `/api/**` — require Basic Auth (`michael:qwerty`)
-- `/swagger-ui/**` и `/v3/api-docs/**` — open access
-- CSRF is disabled (for REST)
+- `/api/auth/**` — registration and login (open)  
+- `/api/**` — secured with Basic Auth (`michael:qwerty`)  
+- `/swagger-ui/**` and `/v3/api-docs/**` — open access  
+- CSRF disabled (REST-friendly)  
 
 ---
 
-## 📁 API Structure
+## 📁 API Endpoints
 
 ### 👤 Users (`/api/users`)
-| Method | Endpoint           | Description                      |
-|--------|--------------------|-------------------------------|
-| POST   | `/register`        | Register user      |
-| POST   | `/login`           | Login (password check)        |
-| GET    | `/`                | Get all users   |
-| GET    | `/{id}`            | Get by ID                |
-| PUT    | `/{id}`            | Update user         |
-| DELETE | `/{id}`            | Delete user          |
-
-> DTO: `UserRegisterDTO`, `UserLoginDTO`
-
----
+- `POST /register` — Register user  
+- `POST /login` — Login  
+- `GET /` — List all users  
+- `GET /{id}` — Get user by ID  
+- `PUT /{id}` — Update user  
+- `DELETE /{id}` — Delete user  
 
 ### 📘 Courses (`/api/courses`)
-| Method | Endpoint           | Description                      |
-|--------|--------------------|-------------------------------|
-| GET    | `/`                | All courses                     |
-| GET    | `/{id}`            | Get course by ID           |
-| POST   | `/`                | Add new course           |
-| PUT    | `/{id}`            | Update курс                 |
-| DELETE | `/{id}`            | Delete курс                  |
-
----
+- `GET /` — All courses  
+- `GET /{id}` — Course by ID  
+- `POST /` — Add new course  
+- `PUT /{id}` — Update course  
+- `DELETE /{id}` — Delete course  
 
 ### 👩‍🏫 Teachers (`/api/employees`)
-| Method | Endpoint           | Description                      |
-|--------|--------------------|-------------------------------|
-| GET    | `/`                | All teachers             |
-| GET    | `/{id}`            | Teacher by ID           |
-| POST   | `/`                | Add teacher        |
-| PUT    | `/{id}`            | Update                      |
-| DELETE | `/{id}`            | Delete                       |
-
----
+- `GET /` — All teachers  
+- `GET /{id}` — Teacher by ID  
+- `POST /` — Add teacher  
+- `PUT /{id}` — Update teacher  
+- `DELETE /{id}` — Delete teacher  
 
 ### 💬 Contact Messages (`/api/contact`)
-| Method | Endpoint           | Description                      |
-|--------|--------------------|-------------------------------|
-| GET    | `/`                | Get all messages        |
-| GET    | `/{id}`            | Get by ID                |
-| POST   | `/`                | Send message           |
-| DELETE | `/{id}`            | Delete                       |
+- `GET /` — All messages  
+- `GET /{id}` — Message by ID  
+- `POST /` — Send new message  
+- `DELETE /{id}` — Delete message  
+
+### 📄 Pages (`/api/pages`)
+- `GET /` — All pages  
+- `GET /{id}` — Page by ID  
+- `POST /` — Create new page  
+- `PUT /{id}` — Update page  
+- `DELETE /{id}` — Delete page  
 
 ---
 
-### 📄 Static Pages (`/api/pages`)
-| Method | Endpoint           | Description                      |
-|--------|--------------------|-------------------------------|
-| GET    | `/`                | All pages                  |
-| GET    | `/{id}`            | Get by ID                |
-| POST   | `/`                | Create page              |
-| DELETE | `/{id}`            | Delete страницу              |
+## 🧪 Example Payloads
 
----
-
-## 🧪 Example JSON Payloads
-
-### 🔐 Register user
+**Register User**
 ```json
 {
   "email": "user@example.com",
@@ -102,7 +85,7 @@
 }
 ```
 
-### 🔐 Login
+**Login**
 ```json
 {
   "email": "user@example.com",
@@ -110,7 +93,7 @@
 }
 ```
 
-### ➕ New course
+**New Course**
 ```json
 {
   "language": "German",
@@ -124,7 +107,7 @@
 }
 ```
 
-### ➕ New message
+**New Contact Message**
 ```json
 {
   "name": "Visitor",
@@ -135,64 +118,43 @@
 
 ---
 
-## ⚙️ Technologies
+## ⚙️ Tech Stack
 
-- Java 17 + Spring Boot
-- Spring Data JPA + PostgreSQL
-- Spring Security (Basic Auth)
-- Swagger (springdoc-openapi)
-- Lombok — simplifies entity classes by auto-generating getters, setters, constructors, etc.
-- Docker (multi-stage build)
-- Deploy on [Render](https://render.com)
-- CORS: `127.0.0.1:5500`, `easyeng.netlify.app`
+- Java 17 + Spring Boot  
+- Spring Data JPA + PostgreSQL  
+- Spring Security (Basic Auth)  
+- Lombok (DTOs + Entities)  
+- Hibernate Validator (validation)  
+- Swagger (springdoc-openapi)  
+- Docker (multi-stage build)  
+- Deployment: Render (Backend + Postgres)  
 
 ---
 
-## 🧾 Local Run
+## 🧾 Run Locally
 
 ```bash
 git clone https://github.com/MykhailoHordiichuk/my-intellij-project.git
 cd my-intellij-project
-
-# Run with Maven
 mvn spring-boot:run
 ```
 
-> The application will be available at: `http://localhost:8080`
+App runs at `http://localhost:8080`  
+
+Swagger UI: `http://localhost:8080/swagger-ui/index.html`  
 
 ---
 
-## 🔑 Test Authorization
+## 🔑 Default Auth (for testing)
 
-```bash
+```txt
 Username: michael
 Password: qwerty
 ```
 
-InMemory user is used for admin.
-
 ---
 
-## 🔍 Swagger
+## 👨‍💻 Author
 
-Available at:
-```
-https://easyeng-ccwf.onrender.com/swagger-ui/index.html 
-```
-
----
-
-## 🧩 Planned Improvements
-
-- Refactor business logic into a dedicated Service Layer
-- Replace Basic Auth with JWT authentication
-- Implement role-based access control (ADMIN / USER / TEACHER)
-- Add validation for DTOs and standardized error responses
-- Integrate email notifications for user actions
-- Add unit and integration tests for controllers
-
----
-
-## 👨‍💻 Authors
-
-- Mykhailo Hordiichuk — Backend Developer (https://github.com/MykhailoHordiichuk/my-intellij-project.git)
+- **Mykhailo Hordiichuk** — Backend Developer  
+  [GitHub](https://github.com/MykhailoHordiichuk/my-intellij-project)  

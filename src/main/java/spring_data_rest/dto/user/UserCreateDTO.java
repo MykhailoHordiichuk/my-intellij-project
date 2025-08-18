@@ -1,39 +1,28 @@
-package spring_data_rest.entity;
+package spring_data_rest.dto.user;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Column(nullable = false, unique = true, length = 100)
+public class UserCreateDTO {
     @Email
     @NotBlank
+    @Size(max = 100)
     private String email;
 
-    @Column(nullable = false, length = 100)
     @NotBlank
     @Size(min = 6, max = 100)
     private String password;
 
-    @Column(length = 50)
     @Size(max = 50)
     private String firstName;
 
-    @Column(length = 50)
     @Size(max = 50)
     private String lastName;
 
@@ -41,7 +30,6 @@ public class User {
     @Max(99)
     private Integer age;
 
-    @Column(length = 20)
     @Size(max = 20)
     private String phoneNumber;
 

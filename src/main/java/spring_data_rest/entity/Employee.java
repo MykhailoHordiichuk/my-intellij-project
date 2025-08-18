@@ -1,48 +1,62 @@
 package spring_data_rest.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "employees")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "employees")
+@EqualsAndHashCode(exclude = "courses")
+@ToString(exclude = "courses")
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "first_name")
+    @Column(nullable = false, length = 50)
+    @NotBlank
+    @Size(max = 50)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(nullable = false, length = 50)
+    @NotBlank
+    @Size(max = 50)
     private String lastName;
 
-    @Column(name = "email")
+    @Column(nullable = false, unique = true, length = 100)
+    @Email
+    @NotBlank
+    @Size(max = 100)
     private String email;
 
-    @Column(name = "language")
+    @Column(length = 50)
+    @Size(max = 50)
     private String language;
 
-    @Column(name = "level")
+    @Column(length = 20)
+    @Size(max = 20)
     private String level;
 
-    @Column(name = "experience_years")
+    @Min(0)
+    @Max(80)
     private int experienceYears;
 
-    @Column(name = "hourly_rate")
+    @DecimalMin(value = "0.0", inclusive = true)
     private double hourlyRate;
 
-    @JsonBackReference // чтобы не зациклиться с Course
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
-    private List<Course> courses;
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL, orphanRemoval = false)
+    private List<Course> courses = new ArrayList<>();
 
 }

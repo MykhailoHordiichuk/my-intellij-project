@@ -1,121 +1,99 @@
 package spring_data_rest.controller;
 
-import spring_data_rest.dao.CourseRepository;
-import spring_data_rest.dao.EmployeeRepository;
+import spring_data_rest.dto.course.*;
 import spring_data_rest.entity.Course;
 import spring_data_rest.entity.Employee;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import spring_data_rest.service.CourseService;
+import spring_data_rest.service.EmployeeService;
+
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/courses")
 public class CourseController {
 
-    private static final Logger logger = LoggerFactory.getLogger(CourseController.class);
+    private final CourseService courses;
+    private final EmployeeService employees;
 
-    @Autowired
-    private CourseRepository courseRepository;
-
-    @Autowired
-    private EmployeeRepository employeeRepository;
-
-    // Получить все курсы
-    @GetMapping
-    public List<Course> getAllCourses() {
-        logger.info("GET /api/courses - getAllCourses called");
-        List<Course> courses = courseRepository.findAll();
-        logger.debug("Retrieved {} courses", courses.size());
-        return courses;
+    public CourseController(CourseService courses, EmployeeService employees) {
+        this.courses = courses;
+        this.employees = employees;
     }
 
-    // Получить курс по ID
+    @PostMapping
+    public CourseDTO create(@Valid @RequestBody CourseCreateDTO dto) {
+        Course saved = courses.create(fromCreate(dto));
+        // teacherId опционально: если задан, подцепим преподавателя
+        if (dto.getTeacherId() != null) {
+            Employee teacher = employees.get(dto.getTeacherId());
+            saved.setTeacher(teacher);
+            saved = courses.update(saved.getId(), saved);
+        }
+        return toDto(saved);
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Course> getCourseById(@PathVariable int id) {
-        logger.info("GET /api/courses/{} - getCourseById called", id);
-        Optional<Course> courseOpt = courseRepository.findById(id);
-        if (courseOpt.isPresent()) {
-            logger.debug("Course found: {}", courseOpt.get());
-            return ResponseEntity.ok(courseOpt.get());
-        } else {
-            logger.warn("Course with ID {} not found", id);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    public CourseDTO get(@PathVariable Integer id) {
+        return toDto(courses.get(id));
     }
 
-    // Добавить новый курс
-    @PostMapping(consumes = "application/json")
-    public ResponseEntity<?> addCourse(@RequestBody Course course) {
-        logger.info("POST /api/courses - addCourse called with data: {}", course);
-
-        if (course.getTeacher() != null) {
-            int teacherId = course.getTeacher().getId();
-            logger.debug("Checking if teacher with ID {} exists", teacherId);
-            Optional<Employee> teacher = employeeRepository.findById(teacherId);
-            if (teacher.isEmpty()) {
-                logger.warn("Teacher with ID {} not found", teacherId);
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body("Teacher with ID = " + teacherId + " not found");
-            }
-            course.setTeacher(teacher.get());
-        }
-
-        Course savedCourse = courseRepository.save(course);
-        logger.info("Course saved with ID {}", savedCourse.getId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedCourse);
+    @GetMapping
+    public List<CourseDTO> getAll() {
+        return courses.getAll().stream().map(this::toDto).collect(Collectors.toList());
     }
 
-    // Обновить курс по ID
-    @PutMapping(value = "/{id}", consumes = "application/json")
-    public ResponseEntity<?> updateCourse(@PathVariable int id, @RequestBody Course updatedCourse) {
-        logger.info("PUT /api/courses/{} - updateCourse called", id);
-        Optional<Course> existingOpt = courseRepository.findById(id);
-        if (existingOpt.isEmpty()) {
-            logger.warn("Course with ID {} not found for update", id);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Course with ID = " + id + " not found");
+    @PutMapping("/{id}")
+    public CourseDTO update(@PathVariable Integer id, @Valid @RequestBody CourseUpdateDTO dto) {
+        Course current = courses.get(id);
+        applyUpdate(current, dto);
+        // если приходит новый teacherId — подменим преподавателя
+        if (dto.getTeacherId() != null) {
+            current.setTeacher(employees.get(dto.getTeacherId()));
         }
-
-        Course course = existingOpt.get();
-        logger.debug("Existing course before update: {}", course);
-
-        course.setLanguage(updatedCourse.getLanguage());
-        course.setLevel(updatedCourse.getLevel());
-        course.setDescription(updatedCourse.getDescription());
-        course.setPrice(updatedCourse.getPrice());
-        course.setDurationWeeks(updatedCourse.getDurationWeeks());
-
-        if (updatedCourse.getTeacher() != null) {
-            int teacherId = updatedCourse.getTeacher().getId();
-            Optional<Employee> teacher = employeeRepository.findById(teacherId);
-            teacher.ifPresent(course::setTeacher);
-            logger.debug("Updated teacher with ID {}", teacherId);
-        }
-
-        Course saved = courseRepository.save(course);
-        logger.info("Course with ID {} updated", saved.getId());
-        return ResponseEntity.ok(saved);
+        Course saved = courses.update(id, current);
+        return toDto(saved);
     }
 
-    // Удалить курс по ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCourse(@PathVariable int id) {
-        logger.info("DELETE /api/courses/{} - deleteCourse called", id);
+    public void delete(@PathVariable Integer id) {
+        courses.delete(id);
+    }
 
-        if (!courseRepository.existsById(id)) {
-            logger.warn("Course with ID {} not found for deletion", id);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Course with ID = " + id + " not found");
-        }
+    /* -------- mapping helpers -------- */
 
-        courseRepository.deleteById(id);
-        logger.info("Course with ID {} deleted", id);
-        return ResponseEntity.ok("Course with ID = " + id + " was deleted");
+    private CourseDTO toDto(Course c) {
+        return new CourseDTO(
+                c.getId(),
+                c.getLanguage(),
+                c.getLevel(),
+                c.getDescription(),
+                c.getPrice(),
+                c.getDurationWeeks(),
+                c.getTeacher() != null ? c.getTeacher().getId() : null
+        );
+    }
+
+    private Course fromCreate(CourseCreateDTO dto) {
+        Course c = new Course();
+        c.setLanguage(dto.getLanguage());
+        c.setLevel(dto.getLevel());
+        c.setDescription(dto.getDescription());
+        c.setPrice(dto.getPrice());
+        c.setDurationWeeks(dto.getDurationWeeks());
+        // teacher назначаем отдельно (см. выше), чтобы не тащить бизнес-логику сюда
+        return c;
+    }
+
+    private void applyUpdate(Course c, CourseUpdateDTO dto) {
+        if (dto.getLanguage() != null)       c.setLanguage(dto.getLanguage());
+        if (dto.getLevel() != null)          c.setLevel(dto.getLevel());
+        if (dto.getDescription() != null)    c.setDescription(dto.getDescription());
+        if (dto.getPrice() != null)          c.setPrice(dto.getPrice());
+        if (dto.getDurationWeeks() != null)  c.setDurationWeeks(dto.getDurationWeeks());
+        // teacherId обрабатываем выше через EmployeeService
     }
 }
