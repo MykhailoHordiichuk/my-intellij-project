@@ -4,9 +4,6 @@
 It manages users, courses, teachers, static pages, and contact messages.  
 The service is deployed on **Render** with a PostgreSQL database.  
 
-> 🔗 **Live Backend**: https://easyeng-ccwf.onrender.com  
-> 🧪 **Swagger UI**: https://easyeng-ccwf.onrender.com/swagger-ui/index.html  
-
 ---
 
 ## ✅ Features
